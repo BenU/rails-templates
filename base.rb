@@ -1,7 +1,3 @@
-# it is probably not necessary to add the pg gem if
-# the appropriate postgreSQL flag is used with the 
-# rails new generator
-# gem("pg", "~> 0.14.0")
 gem("thin", "~> 1.4.1")
 gem("will_paginate", "~> 3.0.3")
 gem("simple_form", "~> 2.0.2")
