@@ -18,3 +18,24 @@ gem_group :test do
  gem('factory_girl_rails', '~> 4.0.0')
 end
 
+# remove default README file
+remove_file "README.rdoc"
+
+
+# create placeholder README.markdown
+run "echo 'TODO add readme content' > README.markdown"
+
+# initiate git, add to .gitignore, add files and commit
+git :init
+append_file ".gitignore" do 
+"
+# Ignore other unneeded files.
+doc/
+*.swp
+*~
+.project
+.DS_Store"
+end
+git :add => "."
+git :commit => "-m 'First commit!'"
+
