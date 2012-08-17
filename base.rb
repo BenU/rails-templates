@@ -1,3 +1,4 @@
+# add my default gemfiles
 gem("thin", "~> 1.4.1")
 gem("will_paginate", "~> 3.0.3")
 gem("simple_form", "~> 2.0.2")
@@ -21,9 +22,11 @@ end
 # remove default README file
 remove_file "README.rdoc"
 
-
-# create placeholder README.markdown
-run "echo 'TODO add readme content' > README.markdown"
+# create README.markdown
+create_file "README.markdown" do
+  readme = ask("What do you want in the README.markdown file?")
+  "#{readme}"
+end
 
 # initiate git, add to .gitignore, add files and commit
 git :init
@@ -39,3 +42,10 @@ end
 git :add => "."
 git :commit => "-m 'First commit!'"
 
+# create Procfile for heroku deployment
+create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_ENV"
+
+# Per heroku instructions 'Getting Started with Rails 3.x on Heroku at
+# https://devcenter.heroku.com/articles/rails3
+# Set the RACK_ENV to development in your environment
+run('echo "RACK_ENV=development" >>.env')
