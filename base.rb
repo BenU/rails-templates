@@ -49,3 +49,10 @@ create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_EN
 # https://devcenter.heroku.com/articles/rails3
 # Set the RACK_ENV to development in your environment
 run('echo "RACK_ENV=development" >>.env')
+
+
+# replace default app/views/application.html.erb file 
+# with my default
+# Note: at some point could make tytle dynamic with app's name...
+remove_file "app/views/layouts/application.html.erb"
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/application.html.erb?login=BenU&token=9fe3e7a5a988a242aaef451093e81d0e", "app/views/layouts/application.html.erb"
