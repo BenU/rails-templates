@@ -72,11 +72,11 @@ get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_foote
 
 gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, 
 '= require normalize
-*= require layout' 
+ *= require layout' 
 # get normalize.css and add to apps/assets/stylesheets/
 get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 'app/assets/stylesheets/normalize.css'
 # get default layout.css and add to apps/assets/stylesheets/
-get '#', 'app/assets/stylesheets/layout.css.scss'
+get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/layout.css.scss?login=BenU&token=30896367cf073355fa8d08a9e1b7c22d', 'app/assets/stylesheets/layout.css.scss'
 
 
 # modernizr.js
@@ -91,7 +91,7 @@ gsub_file "app/assets/javascripts/application.js", /require jquery[^_]/, 'requir
 '
 
 git :add => "."
-git :commit => "-m 'Add normalize.css and modernizr.development'"
+git :commit => "-m 'Add normalize.css, default layout.css.scss and modernizr.development'"
 
 # collect from HTML5Boilerplate (in addition to normalize.css)
 # - IE PNG fixes to make CSS image resizeing work in IE
