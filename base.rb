@@ -67,11 +67,25 @@ get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_heade
 get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", "app/views/layouts/_footer.html.erb"
 
 
+# normilize.css
 # in app/assets/stylesheets/application.css 
 # replace the '*= require_tree' with '*= require normalize' 
 # so we can load files in specific order and use the
 # normalize.css file
 gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, '= require normalize' 
-
 # get normalize.css and add to apps/assets/stylesheets/
 get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 'app/assets/stylesheets/normalize.css'
+
+# modernizr.js
+# Add uncompressed modernizr.js development file 
+# and add to apps/assets/javascrips/
+# add modernizr.js to application.js manifest
+# NB: a minimized, modernizr file can/should be subbed in
+# later when the needed js is established
+get "http://modernizr.com/downloads/modernizr.js", "app/assets/javascripts/modernizr.development.js"
+gsub_file "app/assets/javascripts/application.js", /require jquery[^_]/, 'require modernizr.development
+//= require jquery
+'
+
+git :add => "."
+git :commit => "-m 'Add normalize.css and modernizr.development'"
