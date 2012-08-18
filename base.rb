@@ -50,6 +50,9 @@ create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_EN
 # Set the RACK_ENV to development in your environment
 run('echo "RACK_ENV=development" >>.env')
 
+git :add => "."
+git :commit => "-m 'use thin via procfile'"
+
 
 # replace default app/views/application.html.erb file 
 # with my default
@@ -63,10 +66,12 @@ get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_heade
 # add footer partial to project
 get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", "app/views/layouts/_footer.html.erb"
 
-=begin
-  
-from app/assets/stylesheets/application.css remove the *= require_tree so we can load files in specific order
-get normalize.css and add to apps/assets/stylesheets/
-add normalize.css to application.rb manifest
-  
-=end
+
+# in app/assets/stylesheets/application.css 
+# replace the '*= require_tree' with '*= require normalize' 
+# so we can load files in specific order and use the
+# normalize.css file
+gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, '= require normalize' 
+
+# get normalize.css and add to apps/assets/stylesheets/
+get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 'app/assets/stylesheets/normalize.css'
