@@ -56,3 +56,17 @@ run('echo "RACK_ENV=development" >>.env')
 # Note: at some point could make tytle dynamic with app's name...
 remove_file "app/views/layouts/application.html.erb"
 get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/application.html.erb?login=BenU&token=9fe3e7a5a988a242aaef451093e81d0e", "app/views/layouts/application.html.erb"
+
+# add header partial to project
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_header.html.erb?login=BenU&token=1a0272ce564699fac96ff5363256f7af", "app/views/layouts/_header.html.erb"
+
+# add footer partial to project
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", "app/views/layouts/_footer.html.erb"
+
+=begin
+  
+from app/assets/stylesheets/application.css remove the *= require_tree so we can load files in specific order
+get normalize.css and add to apps/assets/stylesheets/
+add normalize.css to application.rb manifest
+  
+=end
