@@ -66,15 +66,18 @@ get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_heade
 # add footer partial to project
 get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", "app/views/layouts/_footer.html.erb"
 
+# application.css manifest
+# remove *= require_tree so we can load the css files in desired order
+# add normalize.css and other default css files to manifest
 
-# normilize.css
-# in app/assets/stylesheets/application.css 
-# replace the '*= require_tree' with '*= require normalize' 
-# so we can load files in specific order and use the
-# normalize.css file
-gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, '= require normalize' 
+gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, 
+'= require normalize
+*= require layout' 
 # get normalize.css and add to apps/assets/stylesheets/
 get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 'app/assets/stylesheets/normalize.css'
+# get default layout.css and add to apps/assets/stylesheets/
+get '#', 'app/assets/stylesheets/layout.css.scss'
+
 
 # modernizr.js
 # Add uncompressed modernizr.js development file 
@@ -89,3 +92,7 @@ gsub_file "app/assets/javascripts/application.js", /require jquery[^_]/, 'requir
 
 git :add => "."
 git :commit => "-m 'Add normalize.css and modernizr.development'"
+
+# collect from HTML5Boilerplate (in addition to normalize.css)
+# - IE PNG fixes to make CSS image resizeing work in IE
+# - a clearfix to help with issues related to floated elements

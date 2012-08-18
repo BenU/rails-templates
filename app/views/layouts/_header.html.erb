@@ -1,9 +1,9 @@
 <header id="page_header" role="banner"> <!-- helps with accessibility -->
   <nav id="utility">
     <p>
-      You are logged in as <strong>Sam Spade</strong>
-      <%= link_to "[Your Account]", "#" %> |
-      <%= link_to "[Logout]", "#" %>
+      You are logged in as <strong><%= @current_user %></strong>
+      <%= link_to "[Your Account]", "@current_user_path" %> |
+      <%= link_to "[Logout]", "destroy_session_path" %>
     </p> 
    </nav>
   <%= link_to( 
