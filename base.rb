@@ -58,25 +58,29 @@ git :commit => "-m 'use thin via procfile'"
 # with my default
 # Note: at some point could make tytle dynamic with app's name...
 remove_file "app/views/layouts/application.html.erb"
-get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/application.html.erb?login=BenU&token=9fe3e7a5a988a242aaef451093e81d0e", "app/views/layouts/application.html.erb"
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/application.html.erb?login=BenU&token=9fe3e7a5a988a242aaef451093e81d0e", 
+"app/views/layouts/application.html.erb"
 
 # add header partial to project
-get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_header.html.erb?login=BenU&token=1a0272ce564699fac96ff5363256f7af", "app/views/layouts/_header.html.erb"
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_header.html.erb?login=BenU&token=1a0272ce564699fac96ff5363256f7af", 
+"app/views/layouts/_header.html.erb"
 
 # add footer partial to project
-get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", "app/views/layouts/_footer.html.erb"
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", 
+"app/views/layouts/_footer.html.erb"
 
 # application.css manifest
 # remove *= require_tree so we can load the css files in desired order
 # add normalize.css and other default css files to manifest
-
 gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, 
 '= require normalize
  *= require layout' 
 # get normalize.css and add to apps/assets/stylesheets/
-get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 'app/assets/stylesheets/normalize.css'
+get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 
+'app/assets/stylesheets/normalize.css'
 # get default layout.css and add to apps/assets/stylesheets/
-get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/layout.css.scss?login=BenU&token=30896367cf073355fa8d08a9e1b7c22d', 'app/assets/stylesheets/layout.css.scss'
+get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/layout.css.scss?login=BenU&token=30896367cf073355fa8d08a9e1b7c22d', 
+'app/assets/stylesheets/layout.css.scss'
 
 
 # modernizr.js
@@ -85,8 +89,11 @@ get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/l
 # add modernizr.js to application.js manifest
 # NB: a minimized, modernizr file can/should be subbed in
 # later when the needed js is established
-get "http://modernizr.com/downloads/modernizr.js", "app/assets/javascripts/modernizr.development.js"
-gsub_file "app/assets/javascripts/application.js", /require jquery[^_]/, 'require modernizr.development
+get "http://modernizr.com/downloads/modernizr.js", 
+"app/assets/javascripts/modernizr.development.js"
+gsub_file "app/assets/javascripts/application.js", 
+/require jquery[^_]/, 
+'require modernizr.development
 //= require jquery
 '
 
@@ -96,3 +103,6 @@ git :commit => "-m 'Add normalize.css, default layout.css.scss and modernizr.dev
 # collect from HTML5Boilerplate (in addition to normalize.css)
 # - IE PNG fixes to make CSS image resizeing work in IE
 # - a clearfix to help with issues related to floated elements
+
+# Create static_pages controller with home action
+# create root_to static_pages#home in routes
