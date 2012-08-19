@@ -100,9 +100,34 @@ gsub_file "app/assets/javascripts/application.js",
 git :add => "."
 git :commit => "-m 'Add normalize.css, default layout.css.scss and modernizr.development'"
 
+# *****
 # collect from HTML5Boilerplate (in addition to normalize.css)
 # - IE PNG fixes to make CSS image resizeing work in IE
 # - a clearfix to help with issues related to floated elements
 
+# rspec
+# add code to config/application.rb so that specs aren't 
+# generated for controllers, views, helpers and routing
+rspec_defaults =
+"\n
+    # don't generate specs for controllers, views, helpers and routing
+    config.generators do |g|
+      g.view_specs false
+      g.helper_specs false
+      g.controller_specs false
+      g.routing_specs false
+    end
+\n"
+insert_into_file 'config/application.rb', rspec_defaults, 
+after: "class Application < Rails::Application\n"
+# run rspec:install generator
+run 'bundle install'
+generate 'rspec:install'
+
+# generate static pages
+
+
+# request if want additinal static pages to home, about, contact, etc.
 # Create static_pages controller with home action
 # create root_to static_pages#home in routes
+# generate rspec integration tests 
