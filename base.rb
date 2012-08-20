@@ -126,9 +126,29 @@ run 'bundle install'
 generate 'rspec:install'
 
 # Spork http://rubydoc.info/gems/spork/0.9.2/frames
+# see `get` solution at: https://github.com/Hack56/Rails-Template
 run 'bundle exec spork rspec --bootstrap'
-# set up capybar and other rspec stuff....
-# https://gist.github.com/2489048
+
+# subsitute spec/spec_helper.rb to accomodate spork (and possibly capybara.)
+# The spork changes add all the "environmental loading" spork
+# stuff to the `Spork.prefork` block.
+# my template spec/spec_helper.rb file created 2012-08-20 [BDU]
+# includes a `require 'capybar/rspec'` line that may not be needed
+# as well as a commented out `config.mock_with :rspec` that
+# may be needed.  But I'll update those as I get more info.
+remove_file "spec/spec_helper.rb"
+get "******* PLACEHOLDER for my rails-template spec/spec_helper file", 
+"spec/spec_helper.rb"
+
+git :add => "."
+git :commit => "Set up for rspec, spork and capybara
+
+Establish rspec defaults
+bootstrap spork
+update spec/spec_helper.rb for spork 
+and add line to same file to require capybara
+which may not be necessary."
+
 
 # prepare database.yml for postgreSQL
 # code below was taken from ProGNOMmers's gist at:
@@ -165,9 +185,10 @@ run('rake db:create:all')
 
 # generate static pages
 if yes?("Would you like to generate static pages?")
-static_pages = ask("In addition to home, what other static pages do you want created?
+  static_pages = "home "
+  static_pages += ask("In addition to home, what other static pages do you want created?
   Please separate your pages by spaces:")
-  generate "controller", "StaticPages home #{static_pages}"
+  generate "controller", "StaticPages #{static_pages}"
   route("root :to => 'static_pages#home'")
   remove_file "public/index.html"
 end
