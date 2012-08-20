@@ -137,17 +137,17 @@ run 'bundle exec spork rspec --bootstrap'
 # as well as a commented out `config.mock_with :rspec` that
 # may be needed.  But I'll update those as I get more info.
 remove_file "spec/spec_helper.rb"
-get "******* PLACEHOLDER for my rails-template spec/spec_helper file", 
+get "https://raw.github.com/BenU/rails-templates/master/spec/spec_helper.rb?login=BenU&token=4ac347fc93e0bdfc2bf146465b64e467", 
 "spec/spec_helper.rb"
 
 git :add => "."
-git :commit => "Set up for rspec, spork and capybara
+git :commit => "-m 'Set up for rspec, spork and capybara
 
 Establish rspec defaults
 bootstrap spork
 update spec/spec_helper.rb for spork 
 and add line to same file to require capybara
-which may not be necessary."
+which may not be necessary.'"
 
 
 # prepare database.yml for postgreSQL
