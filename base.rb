@@ -54,6 +54,14 @@ run('echo "RACK_ENV=development" >>.env')
 git :add => "."
 git :commit => "-m 'use thin via procfile'"
 
+# heroku precompile requirement
+insert_into_file "config/application.rb", 
+"\n    #Heroku requirement if not precompiling before deployment
+    config.assets.initialize_on_precompile = false\n\n",
+before: "  end\nend"
+
+git :add => "."
+git :commit => "-m 'Append config/application.rb precompile default for heroku.'"
 
 # replace default app/views/application.html.erb file 
 # with my default
