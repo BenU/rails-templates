@@ -179,8 +179,6 @@ run "createdb -O#{app_name} -Eutf8 #{app_name}_test"
 # an error message in the postgreSQL log is generated.  Hense the next
 # line:
 run "createdb -O#{app_name} -Eutf8 #{app_name}_production"
-# create database
-run('rake db:create:all')
 
 
 # generate static pages
@@ -191,6 +189,30 @@ if yes?("Would you like to generate static pages?")
   generate "controller", "StaticPages #{static_pages}"
   route("root :to => 'static_pages#home'")
   remove_file "public/index.html"
+
+  # generate some integration tests for the static pages
+  # which fail... and should be refactored anywhoo.
+  puts "generating some static pages integration tests!"
+  static_pages_array = static_pages.split()
+  stat_pages_integration_tests = 
+    "require 'spec_helper'
+
+  describe 'Static Pages' do
+    "
+  static_pages_array.each do |static_page|
+    stat_pages_integration_tests += 
+    "
+  describe \"#{static_page} page\" do
+    it \"should have the content \'#{static_page.capitalize}\'\" do
+      visit \'/static_pages/#{static_page}\'
+      page.should have_content(\'#{static_page.capitalize}\')
+    end
+  end
+"
+  end
+    stat_pages_integration_tests += "
+end"
+  create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests  
 end
 
 
