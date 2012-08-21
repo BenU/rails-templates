@@ -31,12 +31,6 @@ Spork.prefork do
     # config.mock_with :flexmock
     # config.mock_with :rr
 
-    # Here, Hartl's "Rails Tutorial" (railstutorial.org repo/video) and 
-    # joequery (https://github.com/Hack56/Rails-Template/blob/master/spec/spec_helper.rb)
-    # both include the next commented line.  I'm not sure if it's currently needed 
-    # or not.  2012-08-20.  rspec-rails, ~> 2.11.0.  spork, ~> 0.9.2.
-    # config.mock_with :rspec 
-
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
