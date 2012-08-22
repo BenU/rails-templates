@@ -67,15 +67,15 @@ git :commit => "-m 'Append config/application.rb precompile default for heroku.'
 # with my default
 # Note: at some point could make tytle dynamic with app's name...
 remove_file "app/views/layouts/application.html.erb"
-get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/application.html.erb?login=BenU&token=9fe3e7a5a988a242aaef451093e81d0e", 
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/application.html.erb", 
 "app/views/layouts/application.html.erb"
 
 # add header partial to project
-get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_header.html.erb?login=BenU&token=1a0272ce564699fac96ff5363256f7af", 
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_header.html.erb", 
 "app/views/layouts/_header.html.erb"
 
 # add footer partial to project
-get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb?login=BenU&token=56a0168e5744af2882b991a42a3c3168", 
+get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_footer.html.erb", 
 "app/views/layouts/_footer.html.erb"
 
 # application.css manifest
@@ -88,7 +88,7 @@ gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./,
 get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 
 'app/assets/stylesheets/normalize.css'
 # get default layout.css and add to apps/assets/stylesheets/
-get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/layout.css.scss?login=BenU&token=30896367cf073355fa8d08a9e1b7c22d', 
+get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/layout.css.scss', 
 'app/assets/stylesheets/layout.css.scss'
 
 
@@ -145,7 +145,7 @@ run 'bundle exec spork rspec --bootstrap'
 # as well as a commented out `config.mock_with :rspec` that
 # may be needed.  But I'll update those as I get more info.
 remove_file "spec/spec_helper.rb"
-get "https://raw.github.com/BenU/rails-templates/master/spec/spec_helper.rb?login=BenU&token=4ac347fc93e0bdfc2bf146465b64e467", 
+get "https://raw.github.com/BenU/rails-templates/master/spec/spec_helper.rb", 
 "spec/spec_helper.rb"
 
 git :add => "."
