@@ -188,6 +188,8 @@ run "createdb -O#{app_name} -Eutf8 #{app_name}_test"
 # line:
 run "createdb -O#{app_name} -Eutf8 #{app_name}_production"
 
+git :add => "."
+git :commit => "-m 'Update config/database.yml for postgreSQL, create databases'"
 
 # generate static pages
 if yes?("Would you like to generate static pages?")
@@ -197,6 +199,9 @@ if yes?("Would you like to generate static pages?")
   generate "controller", "StaticPages #{static_pages}"
   route("root :to => 'static_pages#home'")
   remove_file "public/index.html"
+
+  git :add => "."
+  git :commit => "-m 'Create static pages'"
 
   # generate some integration tests for the static pages
   # which fail... and should be refactored anywhoo.
@@ -220,8 +225,16 @@ if yes?("Would you like to generate static pages?")
   end
     stat_pages_integration_tests += "
 end"
-  create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests  
+  create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
+
+  git :add => "."
+  git :commit => "-m 'Create static_pages integration test placeholders.'"  
 end
+
+# push app to github.com
+github_username = ask("What is your username on github?")
+run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
+run "git push -u origin master"
 
 
 # request if want additinal static pages to home, about, contact, etc.
