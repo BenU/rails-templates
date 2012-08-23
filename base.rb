@@ -243,15 +243,9 @@ github_username = ask("What is your username on github?")
 run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
 run "git push -u origin master"
 
-
 # deploy to heroku!
-heroku_error = run "heroku create rh-oil-price"
-heroku_ok = run "heroku create"
-puts "heroku_error = #{heroku_error}"
-puts "heroku_ok = #{heroku_ok}"
+app_name_attempt = ask("What name would you like to deploy your app to heroku as?")
+until (run "heroku create #{app_name_attempt}") do
+  app_name_attempt = ask("#{app_name_attempt} didn't work.  What name do you want to try next?")
+end
 run "git push heroku master"
-
-# request if want additinal static pages to home, about, contact, etc.
-# Create static_pages controller with home action
-# create root_to static_pages#home in routes
-# generate rspec integration tests 
