@@ -41,7 +41,7 @@ doc/
 # consider adding config/database.yml to .gitignore
 end
 git :add => "."
-git :commit => "-m 'First commit!'"
+git :commit => "-am 'First commit!'"
 
 # create Procfile for heroku deployment
 create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_ENV"
@@ -52,7 +52,7 @@ create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_EN
 run('echo "RACK_ENV=development" >>.env')
 
 git :add => "."
-git :commit => "-m 'use thin via procfile'"
+git :commit => "-am 'use thin via procfile'"
 
 # heroku precompile requirement
 insert_into_file "config/application.rb", 
@@ -61,7 +61,7 @@ insert_into_file "config/application.rb",
 before: "  end\nend"
 
 git :add => "."
-git :commit => "-m 'Append config/application.rb precompile default for heroku.'"
+git :commit => "-am 'Append config/application.rb precompile default for heroku.'"
 
 # replace default app/views/application.html.erb file 
 # with my default
@@ -107,7 +107,7 @@ gsub_file "app/assets/javascripts/application.js",
 '
 
 git :add => "."
-git :commit => "-m 'Add normalize.css, default layout.css.scss and modernizr.development'"
+git :commit => "-am 'Add normalize.css, default layout.css.scss and modernizr.development'"
 
 # *****
 # collect from HTML5Boilerplate (in addition to normalize.css)
@@ -149,7 +149,7 @@ get "https://raw.github.com/BenU/rails-templates/master/spec/spec_helper.rb",
 "spec/spec_helper.rb"
 
 git :add => "."
-git :commit => "-m 'Set up for rspec, spork and capybara
+git :commit => "-am 'Set up for rspec, spork and capybara
 
 Establish rspec defaults
 bootstrap spork
@@ -188,9 +188,6 @@ run "createdb -O#{app_name} -Eutf8 #{app_name}_test"
 # line:
 run "createdb -O#{app_name} -Eutf8 #{app_name}_production"
 
-git :add => "."
-git :commit => "-m 'Update config/database.yml for postgreSQL, create databases'"
-
 # generate static pages
 if yes?("Would you like to generate static pages?")
   static_pages = "home "
@@ -201,7 +198,7 @@ if yes?("Would you like to generate static pages?")
   remove_file "public/index.html"
 
   git :add => "."
-  git :commit => "-m 'Create static pages'"
+  git :commit => "-am 'Create static pages'"
 
   # generate some integration tests for the static pages
   # which fail... and should be refactored anywhoo.
@@ -228,7 +225,7 @@ end"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
 
   git :add => "."
-  git :commit => "-m 'Create static_pages integration test placeholders.'"  
+  git :commit => "-am 'Create static_pages integration test placeholders.'"  
 end
 
 # push app to github.com
@@ -236,6 +233,12 @@ github_username = ask("What is your username on github?")
 run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
 run "git push -u origin master"
 
+# deploy to heroku!
+heroku_error = run "heroku create rh-oil-price"
+heroku_ok = run "heroku create"
+puts "heroku_error = #{heroku_error}"
+puts "heroku_ok = #{heroku_ok}"
+run "git push heroku master"
 
 # request if want additinal static pages to home, about, contact, etc.
 # Create static_pages controller with home action
