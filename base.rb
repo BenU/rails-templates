@@ -227,11 +227,22 @@ end"
   git :add => "."
   git :commit => "-am 'Create static_pages integration test placeholders.'"  
 end
+  
+# get logo placeholder
+if yes?("Do you have a logo image (png formate only) you would like to use?")
+  logo_path = ask("What is the path to your logo file?")
+else 
+  logo_path = "https://raw.github.com/BenU/rails-templates/master/app/assets/images/logo.png"
+end
+get logo_path, "app/assets/images/logo.png"
+git add: "."
+git commit: "-am 'Add logo placeholder image or logo image'"
 
 # push app to github.com
 github_username = ask("What is your username on github?")
 run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
 run "git push -u origin master"
+
 
 # deploy to heroku!
 heroku_error = run "heroku create rh-oil-price"
