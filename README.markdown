@@ -31,6 +31,7 @@ eg
 * set up for email with sendgrid
 * create rvm gemset
 * Add nifty generator gem or role own scaffold generator
+* refactor into more easilly digestible peices the currently horrible base.rb file.
 
 –
 
