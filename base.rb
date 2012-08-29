@@ -44,26 +44,6 @@ end
 git :add => "."
 git :commit => "-am 'First commit!'"
 
-# create Procfile for heroku deployment
-create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_ENV"
-
-# Per heroku instructions 'Getting Started with Rails 3.x on Heroku at
-# https://devcenter.heroku.com/articles/rails3
-# Set the RACK_ENV to development in your environment
-run('echo "RACK_ENV=development" >>.env')
-
-git :add => "."
-git :commit => "-am 'use thin via procfile'"
-
-# heroku precompile requirement
-insert_into_file "config/application.rb", 
-"\n    #Heroku requirement if not precompiling before deployment
-    config.assets.initialize_on_precompile = false\n\n",
-before: "  end\nend"
-
-git :add => "."
-git :commit => "-am 'Append config/application.rb precompile default for heroku.'"
-
 # replace default app/views/application.html.erb file 
 # with my default
 # Note: at some point could make tytle dynamic with app's name...
@@ -100,10 +80,12 @@ get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/l
 run "rails g formtastic:install"
 create_file "app/assets/stylesheets/ie6.css", "*= require formtastic_ie6"
 create_file "app/assets/stylesheets/ie7.css", "*= require formtastic_ie7"
+create_file "app/assets/stylesheets/my_formtastic_changes.css.scss", 
+"// Place changes to formtastic default styling here."
 insert_into_file "config/environments/production.rb", 
-"\n  # reqired for formtastic
-  config.assets.precompile += %w( ie6.css ie7.css )\n",
-before: "end"
+"\n\n  # reqired for formtastic
+  config.assets.precompile += %w( ie6.css ie7.css )",
+after: "config.assets.digest = true"
 
 # modernizr.js
 # Add uncompressed modernizr.js development file 
@@ -250,21 +232,6 @@ get logo_path, "app/assets/images/logo.png"
 git add: "."
 git commit: "-am 'Add logo placeholder image or logo image'"
 
-# push app to github.com
-if yes?("Would you like to store source in GitHub repository?")
-  github_username = ask("What is your username on github?")
-  run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
-  run "git push -u origin master"
-
-  # deploy to heroku!
-  if yes?("Would you like to deploy to Heroku?")
-    app_name_attempt = ask("What name would you like to deploy your app to heroku as?")
-    until (run "heroku create #{app_name_attempt}") do
-      app_name_attempt = ask("#{app_name_attempt} didn't work.  What name do you want to try next?")
-    end
-    run "git push heroku master"
-  end
-end
 
 # authentication
 if yes?("Would you like to add user authentication?")
@@ -278,4 +245,41 @@ if yes?("Would you like to add user authentication?")
   # substitute in app/models/user.rb
   # substitute in app/controllers/users_controller.rb
   # substitute in app/views/users/new.html.erb
+end
+
+# push app to github.com
+if yes?("Would you like to store source in GitHub repository?")
+  github_username = ask("What is your username on github?")
+  run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
+  run "git push -u origin master"
+
+  # deploy to heroku?
+  if yes?("Would you like to deploy to Heroku?")
+    # create Procfile for heroku deployment
+    create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_ENV"
+
+    # Per heroku instructions 'Getting Started with Rails 3.x on Heroku at
+    # https://devcenter.heroku.com/articles/rails3
+    # Set the RACK_ENV to development in your environment
+    run('echo "RACK_ENV=development" >>.env')
+
+    git :add => "."
+    git :commit => "-am 'use thin via procfile'"
+
+    # heroku precompile requirement
+    insert_into_file "config/application.rb", 
+    "\n    #Heroku requirement if not precompiling before deployment
+        config.assets.initialize_on_precompile = false\n\n",
+    before: "  end\nend"
+
+    git :add => "."
+    git :commit => "-am 'Append config/application.rb precompile default for heroku.'"
+  
+    app_name_attempt = ask("What name would you like to deploy your app to heroku as?")
+    until (run "heroku create #{app_name_attempt}") do
+      app_name_attempt = ask("#{app_name_attempt} didn't work.  What name do you want to try next?")
+    end
+    run "git push"
+    run "git push heroku master"
+  end
 end
