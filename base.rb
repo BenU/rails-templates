@@ -1,7 +1,7 @@
 # add my default gemfiles
 gem("thin", "~> 1.4.1")
 gem("will_paginate", "~> 3.0.3")
-gem("simple_form", "~> 2.0.2")
+gem("formtastic", "~> 2.2.1")
 
 gem_group :development do
  gem("annotate", "~> 2.5.0")
@@ -18,6 +18,7 @@ gem_group :test do
  gem('capybara', '~> 1.1.2')
  gem('factory_girl_rails', '~> 4.0.0')
 end
+run 'bundle install'
 
 # remove default README file
 remove_file "README.rdoc"
@@ -81,9 +82,13 @@ get "https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_foote
 # application.css manifest
 # remove *= require_tree so we can load the css files in desired order
 # add normalize.css and other default css files to manifest
+# **** note that the formtastic edits should be dynamically added should the 
+# formtastic gem be used.  Something to refactor.
 gsub_file 'app/assets/stylesheets/application.css', /\A*= require_tree ./, 
 '= require normalize
- *= require layout' 
+ *= require layout
+ *= require formtastic
+ *= require my_formtastic_changes' 
 # get normalize.css and add to apps/assets/stylesheets/
 get 'https://raw.github.com/necolas/normalize.css/master/normalize.css', 
 'app/assets/stylesheets/normalize.css'
@@ -91,6 +96,14 @@ get 'https://raw.github.com/necolas/normalize.css/master/normalize.css',
 get 'https://raw.github.com/BenU/rails-templates/master/app/assets/stylesheets/layout.css.scss', 
 'app/assets/stylesheets/layout.css.scss'
 
+# formtastic
+run "rails g formtastic:install"
+create_file "app/assets/stylesheets/ie6.css", "*= require formtastic_ie6"
+create_file "app/assets/stylesheets/ie7.css", "*= require formtastic_ie7"
+insert_into_file "config/environments/production.rb", 
+"\n  # reqired for formtastic
+  config.assets.precompile += %w( ie6.css ie7.css )\n",
+before: "end"
 
 # modernizr.js
 # Add uncompressed modernizr.js development file 
@@ -107,7 +120,7 @@ gsub_file "app/assets/javascripts/application.js",
 '
 
 git :add => "."
-git :commit => "-am 'Add normalize.css, default layout.css.scss and modernizr.development'"
+git :commit => "-am 'Add normalize.css, default layout.css.scss, modernizr.development, formtastic changes'"
 
 # *****
 # collect from HTML5Boilerplate (in addition to normalize.css)
@@ -130,7 +143,6 @@ rspec_defaults =
 insert_into_file 'config/application.rb', rspec_defaults, 
 after: "class Application < Rails::Application\n"
 # run rspec:install generator
-run 'bundle install'
 generate 'rspec:install'
 
 # Spork http://rubydoc.info/gems/spork/0.9.2/frames
@@ -239,13 +251,31 @@ git add: "."
 git commit: "-am 'Add logo placeholder image or logo image'"
 
 # push app to github.com
-github_username = ask("What is your username on github?")
-run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
-run "git push -u origin master"
+if yes?("Would you like to store source in GitHub repository?")
+  github_username = ask("What is your username on github?")
+  run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
+  run "git push -u origin master"
 
-# deploy to heroku!
-app_name_attempt = ask("What name would you like to deploy your app to heroku as?")
-until (run "heroku create #{app_name_attempt}") do
-  app_name_attempt = ask("#{app_name_attempt} didn't work.  What name do you want to try next?")
+  # deploy to heroku!
+  if yes?("Would you like to deploy to Heroku?")
+    app_name_attempt = ask("What name would you like to deploy your app to heroku as?")
+    until (run "heroku create #{app_name_attempt}") do
+      app_name_attempt = ask("#{app_name_attempt} didn't work.  What name do you want to try next?")
+    end
+    run "git push heroku master"
+  end
 end
-run "git push heroku master"
+
+# authentication
+if yes?("Would you like to add user authentication?")
+  run "rails g resource user email password_digest"
+  rake "db:migrate"
+  insert_into_file "app/models/user.rb", 
+  "  has_secure_password\n", before: "end"
+  gsub_file "app/models/user.rb", ":password_digest", ":password, :password_confirmation"
+  gsub_file "Gemfile", /# gem 'bcrypt-ruby', /, "gem 'bcrypt-ruby',"
+  run "bundle install"
+  # substitute in app/models/user.rb
+  # substitute in app/controllers/users_controller.rb
+  # substitute in app/views/users/new.html.erb
+end
