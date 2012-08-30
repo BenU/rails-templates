@@ -272,7 +272,7 @@ if yes?("Would you like to store source in GitHub repository?")
     else
       break
     end
-   end
+  end
 
   # don't deploy to heroku of unable to deploy to github so... github_failure_response
   # deploy to heroku?
