@@ -236,15 +236,26 @@ git commit: "-am 'Add logo placeholder image or logo image'"
 # authentication
 if yes?("Would you like to add user authentication?")
   run "rails g resource user email password_digest"
+  # update user model
+  remove_file "app/models/user.rb"
+  get "https://raw.github.com/BenU/rails-templates/master/app/models/user.rb",
+  "app/models/user.rb"
   rake "db:migrate"
-  insert_into_file "app/models/user.rb", 
-  "  has_secure_password\n", before: "end"
-  gsub_file "app/models/user.rb", ":password_digest", ":password, :password_confirmation"
+  # update user controller
+  # substitute in app/controllers/users_controller.rb
+  remove_file "app/controllers/users_controller.rb"
+  get "https://raw.github.com/BenU/rails-templates/master/app/controllers/users_controller.rb",
+  "app/controllers/users_controller.rb"
+  # update app/views/users/new.html.erb
+  remove_file "app/views/users/new.html.erb"
+  get "https://raw.github.com/BenU/rails-templates/master/app/views/users/new.html.erb",
+  "app/views/users/new.html.erb"
+  # Uncomment "# gem 'bcrypt-ruby'" in gemfile
   gsub_file "Gemfile", /# gem 'bcrypt-ruby', /, "gem 'bcrypt-ruby',"
   run "bundle install"
-  # substitute in app/models/user.rb
-  # substitute in app/controllers/users_controller.rb
-  # substitute in app/views/users/new.html.erb
+  # git commit
+  git add: "."
+  git commit: "-am 'Add user model and basic authentication'"
 end
 
 # push app to github.com
@@ -253,8 +264,19 @@ if yes?("Would you like to store source in GitHub repository?")
   run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
   run "git push -u origin master"
 
+  until (run "git push -u origin master") do
+    github_failure_response = yes?("Couldn't push to github.  Need to make the repository there? (y/n)")
+    if github_failure_response
+      puts "Ok.  Go make the #{app_name} repository at github."
+      yes?("Have you made the repository?")
+    else
+      break
+    end
+   end
+
+  # don't deploy to heroku of unable to deploy to github so... github_failure_response
   # deploy to heroku?
-  if yes?("Would you like to deploy to Heroku?")
+  if github_failure_response && yes?("Would you like to deploy to Heroku?")
     # create Procfile for heroku deployment
     create_file "Procfile", "web: bundle exec rails server thin -p $PORT -e $RACK_ENV"
 
@@ -281,5 +303,6 @@ if yes?("Would you like to store source in GitHub repository?")
     end
     run "git push"
     run "git push heroku master"
+    run "heroku run rake db:migrate"
   end
 end

@@ -25,9 +25,7 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/base.rb`
 
-**TODO's Aug 22, 02012**
-* offer authentication/cancan
-* create user model
+**TODO's Aug 29, 02012**
 * set up for email with sendgrid
 * create rvm gemset
 * Add nifty generator gem or role own scaffold generator
