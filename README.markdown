@@ -23,13 +23,13 @@ I don’t do this:  `$ rails new [app name] -d postgresql --skip-test-unit -m [t
 I use the following:
 `$ rails new [app name] -m [template file or url]`
 eg
-`$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/base.rb`
+`$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Aug 29, 02012**
+**TODO's Sept 1, 02012**
+* finish setting up authentication
 * set up for email with sendgrid
 * create rvm gemset
 * Add nifty generator gem or role own scaffold generator
-* refactor into more easilly digestible peices the currently horrible base.rb file.
 
 –
 
