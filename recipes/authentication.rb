@@ -11,7 +11,12 @@ if yes?("Would you like to add user authentication?")
   # add index to users email
   generate "migration add_index_to_users_email"
   # modify "db/migrate/[timestamp]_add_index_to_users_email.rb"
-  rake "db:migrate"
+  index_migration = in_root("Dir['db/migrate/*_add_index_to_users_email.rb']")
+  # insert_into_file "index_migration", 
+  # "\n  add_index :users, :email, unique: true", after: "change"
+  # rake "db:migrate"
+
+  puts index_migration
 
   # create/update test database
   rake "db:test:prepare"
