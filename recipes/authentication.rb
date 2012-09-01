@@ -36,4 +36,4 @@ if yes?("Would you like to add user authentication?")
   # git commit
   git add: "."
   git commit: "-am 'Add user model and basic authentication'"
-end+
+end
