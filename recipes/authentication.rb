@@ -8,6 +8,11 @@ if yes?("Would you like to add user authentication?")
   "app/models/user.rb"
   rake "db:migrate"
 
+  # add index to users email
+  generate "migration add_index_to_users_email"
+  # modify "db/migrate/[timestamp]_add_index_to_users_email.rb"
+  rake "db:migrate"
+
   # create/update test database
   rake "db:test:prepare"
 
