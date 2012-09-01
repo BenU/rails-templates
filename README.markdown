@@ -27,8 +27,8 @@ eg
 
 **TODO's Sept 1, 02012**
 * finish setting up authentication
-* set up for email with sendgrid
 * create rvm gemset
+* set up for email with sendgrid
 * Add nifty generator gem or role own scaffold generator
 
 –
