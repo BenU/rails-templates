@@ -13,7 +13,8 @@ if yes?("Would you like to add user authentication?")
 
   # udpate model specs
   remove_file "spec/models/user_spec.rb"
-  get "", "spec/models/user_spec.rb" 
+  get "https://raw.github.com/BenU/rails-templates/master/spec/models/user_spec.rb",
+  "spec/models/user_spec.rb" 
 
 
   # update user controller
