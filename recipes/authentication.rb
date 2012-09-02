@@ -1,6 +1,10 @@
 # authentication
 if yes?("Would you like to add user authentication?")
   run "rails g resource user email password_digest"
+
+  # Uncomment "# gem 'bcrypt-ruby'" in gemfile
+  gsub_file "Gemfile", /# gem 'bcrypt-ruby', /, "gem 'bcrypt-ruby',"
+  run "bundle install"
   
   # update user model
   remove_file "app/models/user.rb"
@@ -39,10 +43,8 @@ if yes?("Would you like to add user authentication?")
   remove_file "app/views/users/new.html.erb"
   get "https://raw.github.com/BenU/rails-templates/master/app/views/users/new.html.erb",
   "app/views/users/new.html.erb"
-  
-  # Uncomment "# gem 'bcrypt-ruby'" in gemfile
-  gsub_file "Gemfile", /# gem 'bcrypt-ruby', /, "gem 'bcrypt-ruby',"
-  run "bundle install"
+
+  # annotate the user model
   run "annotate --position before"
   
   # git commit
