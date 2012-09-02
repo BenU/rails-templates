@@ -13,12 +13,10 @@ if yes?("Would you like to add user authentication?")
   # modify "db/migrate/[timestamp]_add_index_to_users_email.rb"
   # trying to follow info found here: http://stackoverflow.com/questions/7690003/how-do-i-get-a-rails-template-to-add-additional-attributes-on-migration-columns
   # in_root { || insert_into_file }
-  index_migration = Dir['db/migrate/*_add_index_to_users_email.rb']
-  # insert_into_file "index_migration", 
-  # "\n  add_index :users, :email, unique: true", after: "change"
-  # rake "db:migrate"
-
-  puts index_migration
+  index_migration_file = Dir['db/migrate/*_add_index_to_users_email.rb']
+  in_root { insert_into_file index_migration_file, 
+  "\n  add_index :users, :email, unique: true", after: "change" }
+  rake "db:migrate"
 
   # create/update test database
   rake "db:test:prepare"
