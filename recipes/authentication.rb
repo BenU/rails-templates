@@ -17,7 +17,7 @@ if yes?("Would you like to add user authentication?")
   index_migration_array = Dir['db/migrate/*_add_index_to_users_email.rb']
   index_migration_file = index_migration_array.first
   in_root { insert_into_file index_migration_file, 
-  "\n  add_index :users, :email, unique: true", after: "change" }
+  "\n    add_index :users, :email, unique: true", after: "change" }
   rake "db:migrate"
 
   # create/update test database
