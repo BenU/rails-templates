@@ -33,21 +33,13 @@ if yes?("Would you like to add user authentication?")
   "spec/models/user_spec.rb" 
 
 
-  # update user controller
-  # substitute in app/controllers/users_controller.rb
-  remove_file "app/controllers/users_controller.rb"
-  get "https://raw.github.com/BenU/rails-templates/master/app/controllers/users_controller.rb",
-  "app/controllers/users_controller.rb"
-  
-  # update app/views/users/new.html.erb
-  remove_file "app/views/users/new.html.erb"
-  get "https://raw.github.com/BenU/rails-templates/master/app/views/users/new.html.erb",
-  "app/views/users/new.html.erb"
+  # update user controller, views and integration tests
+  apply "https://raw.github.com/BenU/rails-templates/master/recipes/user_vc.rb"
 
   # annotate the user model
   run "annotate --position before"
   
   # git commit
   git add: "."
-  git commit: "-am 'Add user model and basic authentication'"
+  git commit: "-am 'Add user and basic authentication'"
 end
