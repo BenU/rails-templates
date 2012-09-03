@@ -26,3 +26,18 @@ header#page_header {
     height: 60px;
   }
 }
+
+div.container {
+  float: left;
+  padding-left: 15px;
+}
+
+
+/* miscellaneous */
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  padding-left: 15px;
+  margin-top: 45px;
+}
