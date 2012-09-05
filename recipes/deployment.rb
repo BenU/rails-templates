@@ -4,6 +4,11 @@ if yes?("Would you like to store source in GitHub repository?")
   run "git remote add origin git@github.com:#{github_username}/#{app_name}.git"
   run "git push -u origin master"
 
+  # this code attempts to allow for forgetting to create github repository and
+  # other github push failures.  It is akward but hopefully I can get it to
+  # work...  Will refactor later.
+  github_failure_response = true
+
   until (run "git push -u origin master") do
     github_failure_response = yes?("Couldn't push to github.  You may need to create a repository or 
     there was some other GitHub based error.  Try again? (y/n)")
@@ -11,7 +16,7 @@ if yes?("Would you like to store source in GitHub repository?")
       puts "Ok.  Go make the #{app_name} repository at github."
       yes?("Have you made the repository?")
     else
-      break
+      break if yes?("Want to stop trying?")
     end
   end
 
