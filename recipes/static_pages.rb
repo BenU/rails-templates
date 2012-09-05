@@ -17,7 +17,7 @@ if yes?("Would you like to generate static pages?")
     regex_string = "get \"static_pages\\/#{static_page}\""
     if static_page != "home" 
       gsub_file('config/routes.rb', Regexp.new(regex_string), 
-        "match '/#{static_page}',  to: 'static_pages\##{static_page}")
+        "match '/#{static_page}',  to: 'static_pages\##{static_page}'")
     else
       gsub_file('config/routes.rb', Regexp.new(regex_string), 
         "")
