@@ -8,7 +8,7 @@ if yes?("Would you like to generate static pages?")
   
   # root to home page
   gsub_file('config/routes.rb', /get "static_pages\/home"/, 
-    "root :to => 'static_pages#home'" )
+    "root to: 'static_pages#home'" )
   remove_file "public/index.html"
   
   # create named routes for our static pages
