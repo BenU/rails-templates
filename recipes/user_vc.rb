@@ -11,3 +11,8 @@
   remove_file "app/views/users/new.html.erb"
   get "https://raw.github.com/BenU/rails-templates/master/app/views/users/new.html.erb",
   "app/views/users/new.html.erb"
+
+  # match '/signup', to: 'users#new'
+  insert_into_file "config/routes.rb", 
+  "  match '/signup',  to: 'users#new'\n\n", 
+  before: "  # The priority is based upon order of creation:"

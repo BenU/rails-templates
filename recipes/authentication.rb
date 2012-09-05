@@ -2,6 +2,10 @@
 if yes?("Would you like to add user authentication?")
   run "rails g resource user email password_digest"
 
+  # get user pages integration tests
+  get "https://raw.github.com/BenU/rails-templates/master/spec/requests/user_pages_spec.rb", 
+  "spec/requests/user_pages_spec.rb"
+
   # Uncomment "# gem 'bcrypt-ruby'" in gemfile
   gsub_file "Gemfile", /# gem 'bcrypt-ruby', /, "gem 'bcrypt-ruby',"
   run "bundle install"
