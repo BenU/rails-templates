@@ -25,10 +25,14 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Sept 1, 02012**
+**TODO's Sept 5, 02012**
 * finish setting up authentication
+* correct integration tests for static pages
 * create rvm gemset
+* Allow adding html to static pages if created
+* if authentication and static pages, add 'signup' button to home page
 * set up for email with sendgrid
+* add forgot password to authentication
 * Add nifty generator gem or role own scaffold generator
 
 –
