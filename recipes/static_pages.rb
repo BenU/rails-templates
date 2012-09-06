@@ -57,8 +57,9 @@ if yes?("Would you like to generate static pages?")
       end
     end
   "
+    end
   end # static_pages_array.each end
-    stat_pages_integration_tests += "
+  stat_pages_integration_tests += "
 end"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
 
