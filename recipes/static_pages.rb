@@ -42,7 +42,7 @@ if yes?("Would you like to generate static pages?")
       "
     describe \"#{static_page} page\" do
       it \"should have the content \'#{static_page.titleize}\'\" do
-        visit \'/static_pages/#{static_page}\'
+        visit \'/#{static_page}\'
         page.should have_content(\'#{static_page.titleize}\')
       end
     end
