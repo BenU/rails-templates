@@ -12,7 +12,6 @@ if yes?("Would you like to generate static pages?")
   remove_file "public/index.html"
   
   # create named routes for our static pages
-  # *****
   static_pages_array.each do |static_page|
     regex_string = "get \"static_pages\\/#{static_page}\""
     if static_page != "home" 
@@ -38,16 +37,27 @@ if yes?("Would you like to generate static pages?")
   describe 'Static Pages' do
     "
   static_pages_array.each do |static_page|
+    if static_page != "home"
     stat_pages_integration_tests += 
-    "
-  describe \"#{static_page} page\" do
-    it \"should have the content \'#{static_page.capitalize}\'\" do
-      visit \'/static_pages/#{static_page}\'
-      page.should have_content(\'#{static_page.capitalize}\')
+      "
+    describe \"#{static_page} page\" do
+      it \"should have the content \'#{static_page.capitalize}\'\" do
+        visit \'/static_pages/#{static_page}\'
+        page.should have_content(\'#{static_page.capitalize}\')
+      end
     end
-  end
-"
-  end
+  "
+    else # static_page == "home"
+      stat_pages_integration_tests += 
+      "
+    describe \"Home page\" do
+      it \"should have the content '#{app_name}'\" do
+        visit root_path
+        page.should have_content('#{app_name}')
+      end
+    end
+  "
+  end # static_pages_array.each end
     stat_pages_integration_tests += "
 end"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
