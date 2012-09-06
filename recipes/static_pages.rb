@@ -41,9 +41,9 @@ if yes?("Would you like to generate static pages?")
     stat_pages_integration_tests += 
       "
     describe \"#{static_page} page\" do
-      it \"should have the content \'#{static_page.capitalize}\'\" do
+      it \"should have the content \'#{static_page.titleize}\'\" do
         visit \'/static_pages/#{static_page}\'
-        page.should have_content(\'#{static_page.capitalize}\')
+        page.should have_content(\'#{static_page.titleize}\')
       end
     end
   "
@@ -51,9 +51,9 @@ if yes?("Would you like to generate static pages?")
       stat_pages_integration_tests += 
       "
     describe \"Home page\" do
-      it \"should have the content '#{app_name}'\" do
+      it \"should have the content '#{app_name.titleize}'\" do
         visit root_path
-        page.should have_content('#{app_name}')
+        page.should have_content('#{app_name.titleize}')
       end
     end
   "
@@ -64,5 +64,5 @@ end"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
 
   git :add => "."
-  git :commit => "-am 'Create static_pages integration test placeholders.'"  
+  git :commit => "-am 'Create static_pages integration tests.'"  
 end
