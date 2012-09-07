@@ -25,10 +25,7 @@ if yes?("Would you like to generate static pages?")
 
   # create content for our static pages
   static_pages_array.each do |static_page|
-    html = ask("What html would you like to add to your #{static_page} page?")
-    remove_file "app/views/static_pages/#{static_page}.html.erb"
-    create_file "app/views/static_pages/#{static_page}.html.erb",
-      html
+    run "subl app/views/static_pages/#{static_page}.html.erb"
   end
 
 
