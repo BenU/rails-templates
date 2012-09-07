@@ -27,9 +27,14 @@ if yes?("Would you like to generate static pages?")
   static_pages_array.each do |static_page|
     run "subl app/views/static_pages/#{static_page}.html.erb"
   end
+  puts "Go edit your static pages in sublime text."
 
   until yes?("Have you updated your static pages?")
   end
+
+  # create base title and titles for static pages.
+  base_title = ask("What do you want your base title to be?")
+  ### add code here to create base title and static page titles
 
   git :add => "."
   git :commit => "-am 'Create static pages'"
@@ -48,10 +53,18 @@ if yes?("Would you like to generate static pages?")
     stat_pages_integration_tests += 
       "
     describe \"#{static_page} page\" do
+
       it \"should have the content \'#{static_page.titleize}\'\" do
         visit \'/#{static_page}\'
         page.should have_content(\'#{static_page.titleize}\')
       end
+
+      it \"should have the title \'#{static_page.titleize}\'\" do
+        visit \'/#{static_page}\'
+        page.should have_selector('title', 
+                  text: \'#{base_title} | #{static_page.titleize}\')
+      end
+
     end
   "
     else # static_page == "home"
