@@ -29,6 +29,7 @@ if yes?("Would you like to generate static pages?")
   end
 
   until yes?("Have you updated your static pages?")
+  end
 
   git :add => "."
   git :commit => "-am 'Create static pages'"
