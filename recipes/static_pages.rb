@@ -28,6 +28,7 @@ if yes?("Would you like to generate static pages?")
     run "subl app/views/static_pages/#{static_page}.html.erb"
   end
 
+  until yes?("Have you updated your static pages?")
 
   git :add => "."
   git :commit => "-am 'Create static pages'"
