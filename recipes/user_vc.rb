@@ -22,7 +22,7 @@
     if yes?("Add 'signup' link to home page?")
       insert_into_file "app/views/static_pages/home.html.erb",
         "  <div class=\"class_place_holder\">
-            <%= link_to \"Sign up.\", new_user_path, class: \"sign_up_button_placeholder\" %>
-          </div>\n", before: "</p>"
+    <%= link_to \"Sign up.\", new_user_path, class: \"sign_up_button_placeholder\" %>
+  </div>\n", before: "</p>"
     end
   end
