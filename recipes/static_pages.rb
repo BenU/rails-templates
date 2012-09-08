@@ -54,9 +54,9 @@ if yes?("Would you like to generate static pages?")
       "
     describe \"#{static_page} page\" do
 
-      it \"should have the content \'#{static_page.titleize}\'\" do
+      it \"should have the h1 \'#{static_page.titleize}\'\" do
         visit \'/#{static_page}\'
-        page.should have_content(\'#{static_page.titleize}\')
+        page.should have_selector('h1', text: '#{static_page.titleize}')
       end
 
       it \"should have the title \'#{base_title} | #{static_page.titleize}\'\" do
