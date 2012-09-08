@@ -49,42 +49,30 @@ if yes?("Would you like to generate static pages?")
   describe 'Static Pages' do
     "
   static_pages_array.each do |static_page|
-    if static_page != "home"
+    if static_page == "home"
+      visit_page = 'root_path'
+      h1_text = "#{app_name.titleize}"
+    else
+      visit_page = "\/#{static_page}"
+      h1_text = "#{static_page.titleize}"
+    end
     stat_pages_integration_tests += 
       "
     describe \"#{static_page} page\" do
 
-      it \"should have the h1 \'#{static_page.titleize}\'\" do
-        visit \'/#{static_page}\'
-        page.should have_selector('h1', text: '#{static_page.titleize}')
+      it \"should have the h1 \'#{h1_text}\'\" do
+        visit #{visit_page}
+        page.should have_selector('h1', text: '#{h1_text}')
       end
 
       it \"should have the title \'#{base_title} | #{static_page.titleize}\'\" do
-        visit \'/#{static_page}\'
+        visit #{visit_page}
         page.should have_selector('title', 
                   text: \'#{base_title} | #{static_page.titleize}\')
       end
 
     end
   "
-    else # static_page == "home"
-      stat_pages_integration_tests += 
-      "
-    describe \"Home page\" do
-      it \"should have the content '#{app_name.titleize}'\" do
-        visit root_path
-        page.should have_content('#{app_name.titleize}')
-      end
-
-      it \"should have the title \'#{base_title} | #{static_page.titleize}\'\" do
-        visit root_path
-        page.should have_selector('title', 
-                  text: \'#{base_title} | #{static_page.titleize}\')
-      end
-
-    end
-  "
-    end
   end # static_pages_array.each end
   stat_pages_integration_tests += "
 end"
