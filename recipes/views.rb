@@ -40,6 +40,9 @@ insert_into_file "config/environments/production.rb",
 "\n\n  # reqired for formtastic
   config.assets.precompile += %w( ie6.css ie7.css )",
 after: "config.assets.digest = true"
+# get formtastic partial which is rendered in layout/application.html.erb
+get 'https://raw.github.com/BenU/rails-templates/master/app/views/layouts/_formtastic.html.erb', 
+  'app/views/layouts/_formtastic.html.erb'
 
 # modernizr.js
 # Add uncompressed modernizr.js development file 

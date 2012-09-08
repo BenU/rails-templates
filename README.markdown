@@ -25,12 +25,11 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Sept 5, 02012**
+**TODO's Sept 8, 02012**
+* add links to static pages dynamically to the footer
 * finish setting up authentication
-* correct integration tests for static pages
+* offer dynamic attributes to user resource created in authentication
 * create rvm gemset
-* Allow adding html to static pages if created
-* if authentication and static pages, add 'signup' button to home page
 * set up for email with sendgrid
 * add forgot password to authentication
 * Add nifty generator gem or role own scaffold generator

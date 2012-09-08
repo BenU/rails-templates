@@ -5,9 +5,7 @@
     <meta charset="utf-8">
     <title><%= full_title(yield(:title)) %></title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <!-- the following two conditional ie stylesheets are for formtastic -->
-    <!--[if IE 6]><%= stylesheet_link_tag 'ie6' %><![endif]-->
-    <!--[if IE 7]><%= stylesheet_link_tag 'ie7' %><![endif]-->
+    <%= render 'layouts/formtastic' %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
