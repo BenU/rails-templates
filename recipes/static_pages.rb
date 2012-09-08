@@ -25,6 +25,14 @@ if yes?("Would you like to generate static pages?")
 
   # create content for our static pages
   static_pages_array.each do |static_page|
+    if static_page == "home"
+      h1_text = "#{app_name.titleize}"
+    else
+      h1_text = "#{static_page.titleize}"
+    end
+    # exchange current content of "app/views/static_pages/#{static_page}.html.erb"
+    # with app/views/static_page.html.erb
+    # and put in some sample contant including providing title, some h1 
     run "subl app/views/static_pages/#{static_page}.html.erb"
   end
   puts "Go edit your static pages in sublime text."
@@ -34,7 +42,8 @@ if yes?("Would you like to generate static pages?")
 
   # create base title and titles for static pages.
   base_title = ask("What do you want your base title to be?")
-  ### add code here to create base title and static page titles
+  ### substitute in base title for 'Base Title Placeholder' in 
+  # "app/views/layouts/application.html.erb"
 
   git :add => "."
   git :commit => "-am 'Create static pages'"
