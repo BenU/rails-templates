@@ -53,7 +53,7 @@ if yes?("Would you like to generate static pages?")
       visit_page = 'root_path'
       h1_text = "#{app_name.titleize}"
     else
-      visit_page = "\/#{static_page}"
+      visit_page = "'\/#{static_page}'"
       h1_text = "#{static_page.titleize}"
     end
     stat_pages_integration_tests += 
