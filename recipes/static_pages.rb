@@ -27,7 +27,7 @@ if yes?("Would you like to generate static pages?")
   static_pages_array.each do |static_page|
     if static_page == "home"
       h1_text = "#{app_name.titleize}"
-      title_string = nil
+      title_string = ""
     else
       h1_text = "#{static_page.titleize}"
       title_string = "#{static_page.titleize}"
