@@ -72,11 +72,11 @@ if yes?("Would you like to generate static pages?")
     if static_page == "home"
       visit_page = 'root_path'
       h1_text = "#{app_name.titleize}"
-      title_text = "#{base_title}"
+      title_text = "#{base_title_string}"
     else
       visit_page = "'\/#{static_page}'"
       h1_text = "#{static_page.titleize}"
-      title_text = "#{base_title} | #{static_page.titleize}"
+      title_text = "#{base_title_string} | #{static_page.titleize}"
     end
     stat_pages_integration_tests += 
       "
