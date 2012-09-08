@@ -75,6 +75,13 @@ if yes?("Would you like to generate static pages?")
         visit root_path
         page.should have_content('#{app_name.titleize}')
       end
+
+      it \"should have the title \'#{base_title} | #{static_page.titleize}\'\" do
+        visit root_path
+        page.should have_selector('title', 
+                  text: \'#{base_title} | #{static_page.titleize}\')
+      end
+
     end
   "
     end
