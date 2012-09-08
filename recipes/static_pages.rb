@@ -72,9 +72,11 @@ if yes?("Would you like to generate static pages?")
     if static_page == "home"
       visit_page = 'root_path'
       h1_text = "#{app_name.titleize}"
+      title_text = "#{base_title}"
     else
       visit_page = "'\/#{static_page}'"
       h1_text = "#{static_page.titleize}"
+      title_text = "#{base_title} | #{static_page.titleize}"
     end
     stat_pages_integration_tests += 
       "
@@ -88,7 +90,7 @@ if yes?("Would you like to generate static pages?")
       it \"should have the title '#{static_page.titleize}'\" do
         visit #{visit_page}
         page.should have_selector('title', 
-                  text: \"\#{base_title} | #{static_page.titleize}\")
+                  text: \"#{title_text}\")
       end
 
     end
