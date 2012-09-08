@@ -47,7 +47,7 @@ if yes?("Would you like to generate static pages?")
   # create base title and titles for static pages.
   base_title_string = ask("What do you want your base title to be?")
   gsub_file "app/views/layouts/application.html.erb", 
-    /Base Title Placeholder/, base_title
+    /Base Title Placeholder/, base_title_string
 
   git :add => "."
   git :commit => "-am 'Create static pages'"
