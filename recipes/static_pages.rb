@@ -97,20 +97,13 @@ if yes?("Would you like to generate static pages?")
 
       if home_title_spec
         stat_pages_integration_tests +=
-        "
-        it \"should not have a custom page title \" do
-          visit #{visit_page}
-          page.should_not have_selector('title', 
-                  text: '| Home')
-        end
-
-      end
-        "
+        "\n      it \"should not have a custom page title \" do
+        visit #{visit_page}
+        page.should_not have_selector('title', 
+                text: '| Home')\n      end\n\n    end\n"
       else
         stat_pages_integration_tests +=
-        "
-      end
-        "  
+        "\n    end\n"
       end
 
   end # static_pages_array.each end
