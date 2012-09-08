@@ -27,14 +27,16 @@ if yes?("Would you like to generate static pages?")
   static_pages_array.each do |static_page|
     if static_page == "home"
       h1_text = "#{app_name.titleize}"
+      title_string = nil
     else
       h1_text = "#{static_page.titleize}"
+      title_string = "#{static_page.titleize}"
     end
     remove_file "app/views/static_pages/#{static_page}.html.erb"
     get "https://raw.github.com/BenU/rails-templates/master/app/views/static_page.html.erb",
       "app/views/static_pages/#{static_page}.html.erb"
     gsub_file "app/views/static_pages/#{static_page}.html.erb",
-      /title_placeholder/, "#{static_page.titleize}"
+      /title_placeholder/, title_string
     gsub_file "app/views/static_pages/#{static_page}.html.erb",
       /h1_placeholder/, "#{h1_text}"
     run "subl app/views/static_pages/#{static_page}.html.erb"
@@ -93,7 +95,7 @@ if yes?("Would you like to generate static pages?")
         visit #{visit_page}
         page.should have_selector('title', 
                   text: \"#{title_text}\")
-      end" 
+      end\n" 
 
       if home_title_spec
         stat_pages_integration_tests +=
