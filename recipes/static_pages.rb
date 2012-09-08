@@ -44,10 +44,15 @@ if yes?("Would you like to generate static pages?")
   until yes?("Have you updated your static pages?")
   end
 
-  # create base title and titles for static pages.
+  # solicit base title and add title helpers.
+  # add full_title helper method to app/helpers/application_helper.rb
+  remove_file "app/helpers/application_helper.rb"
+  get "https://raw.github.com/BenU/rails-templates/master/app/helpers/application_helper.rb",
+    "app/helpers/application_helper.rb"
+  # solicit base title and substitute it into app/helpers/application_helper.rb
   base_title_string = ask("What do you want your base title to be?")
-  gsub_file "app/views/layouts/application.html.erb", 
-    /Base Title Placeholder/, base_title_string
+  gsub_file "app/helpers/application_helper.rb", 
+    /base_title_placeholder/, base_title_string
 
   git :add => "."
   git :commit => "-am 'Create static pages'"
