@@ -45,7 +45,7 @@ if yes?("Would you like to generate static pages?")
   end
 
   # create base title and titles for static pages.
-  base_title = ask("What do you want your base title to be?")
+  base_title_string = ask("What do you want your base title to be?")
   gsub_file "app/views/layouts/application.html.erb", 
     /Base Title Placeholder/, base_title
 
@@ -53,13 +53,15 @@ if yes?("Would you like to generate static pages?")
   git :commit => "-am 'Create static pages'"
 
   # generate some integration tests for the static pages
-  # which fail... and should be refactored anywhoo.
   puts "generating some static pages integration tests!"
   static_pages_array = static_pages.split()
   stat_pages_integration_tests = 
     "require 'spec_helper'
 
   describe 'Static Pages' do
+
+    let(:base_title) { \"#{base_title_string}\" } 
+
     "
   static_pages_array.each do |static_page|
     if static_page == "home"
@@ -81,7 +83,7 @@ if yes?("Would you like to generate static pages?")
       it \"should have the title '#{base_title} | #{static_page.titleize}'\" do
         visit #{visit_page}
         page.should have_selector('title', 
-                  text: '#{base_title} | #{static_page.titleize}')
+                  text: \"#{base_title} | #{static_page.titleize}\")
       end
 
     end

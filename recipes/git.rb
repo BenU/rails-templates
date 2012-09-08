@@ -7,7 +7,8 @@ doc/
 *.swp
 *~
 .project
-.DS_Store"
+.DS_Store
+bundler_stubs/"
 # consider adding config/database.yml to .gitignore
 end
 git :add => "."
