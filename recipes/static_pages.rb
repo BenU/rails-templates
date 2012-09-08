@@ -30,9 +30,13 @@ if yes?("Would you like to generate static pages?")
     else
       h1_text = "#{static_page.titleize}"
     end
-    # exchange current content of "app/views/static_pages/#{static_page}.html.erb"
-    # with app/views/static_page.html.erb
-    # and put in some sample contant including providing title, some h1 
+    remove_file "app/views/static_pages/#{static_page}.html.erb"
+    get "https://raw.github.com/BenU/rails-templates/master/app/views/static_page.html.erb",
+      "app/views/static_pages/#{static_page}.html.erb"
+    gsub_file "app/views/static_pages/#{static_page}.html.erb",
+      /title_placeholder/, "#{static_page.titleize}"
+    gsub_file "app/views/static_pages/#{static_page}.html.erb",
+      /h1_placeholder/, "#{h1_text}"
     run "subl app/views/static_pages/#{static_page}.html.erb"
   end
   puts "Go edit your static pages in sublime text."
@@ -74,10 +78,10 @@ if yes?("Would you like to generate static pages?")
         page.should have_selector('h1', text: '#{h1_text}')
       end
 
-      it \"should have the title \'#{base_title} | #{static_page.titleize}\'\" do
+      it \"should have the title '#{base_title} | #{static_page.titleize}'\" do
         visit #{visit_page}
         page.should have_selector('title', 
-                  text: \'#{base_title} | #{static_page.titleize}\')
+                  text: '#{base_title} | #{static_page.titleize}')
       end
 
     end
