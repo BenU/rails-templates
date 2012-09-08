@@ -80,7 +80,7 @@ if yes?("Would you like to generate static pages?")
         page.should have_selector('h1', text: '#{h1_text}')
       end
 
-      it \"should have the title '\#{base_title} | #{static_page.titleize}'\" do
+      it \"should have the title '#{base_title_string} | #{static_page.titleize}'\" do
         visit #{visit_page}
         page.should have_selector('title', 
                   text: \"\#{base_title} | #{static_page.titleize}\")
