@@ -27,8 +27,8 @@ if yes?("Would you like to generate static pages?")
   static_pages_array.each do |static_page|
     if static_page != "home"
       insert_into_file "app/views/layouts/_footer.html.erb",
-      "\t<li><%= link_to \"#{static_page}\", #{static_page}_path %></li>\n\t\t",
-      before: "</ul>"
+      "\t<%= link_to \"#{static_page}\", #{static_page}_path %>\n\t",
+      before: "</nav>"
     end
   end
 

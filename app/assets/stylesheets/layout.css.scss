@@ -32,6 +32,26 @@ div.container {
   padding-left: 15px;
 }
 
+#page_footer {
+  background-color: #534f4b;
+  color: #fff;
+  height: 28px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  padding: 10px 20px;
+  clear: left;
+
+  a,
+  a:link,
+  a:hover,
+  a:active,
+  a:visited {
+    float: right;
+    padding: 5px 5px;
+    color:#fef8e7;
+    text-decoration: none;
+  }
+}
 
 /* miscellaneous */
 .debug_dump {
