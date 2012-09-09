@@ -25,9 +25,11 @@ if yes?("Would you like to generate static pages?")
 
   # add links to static pages in page footer
   static_pages_array.each do |static_page|
-    insert_into_file "app/views/layouts/_footer.html.erb",
-    "\t\t\t<li><%= link_to \"#{static_page}\", #{static_page}_path %></li>\n",
-    before: "</ul>"
+    if static_page != "home"
+      insert_into_file "app/views/layouts/_footer.html.erb",
+      "\t<li><%= link_to \"#{static_page}\", #{static_page}_path %></li>\n\t\t",
+      before: "</ul>"
+    end
   end
 
 

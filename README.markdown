@@ -25,8 +25,7 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Sept 8, 02012**
-* add links to static pages dynamically to the footer
+**TODO's Sept 9, 02012**
 * finish setting up authentication
 * offer dynamic attributes to user resource created in authentication
 * create rvm gemset
