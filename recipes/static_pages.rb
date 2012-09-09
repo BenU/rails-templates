@@ -79,6 +79,8 @@ if yes?("Would you like to generate static pages?")
 
     let(:base_title) { \"#{base_title_string}\" } 
 
+    subject { page }
+
     "
   static_pages_array.each do |static_page|
     if static_page == "home"
@@ -87,7 +89,7 @@ if yes?("Would you like to generate static pages?")
       title_text = "#{base_title_string}"
       home_title_spec = true
     else
-      visit_page = "'\/#{static_page}'"
+      visit_page = "#{static_page}_path"
       h1_text = "#{static_page.titleize}"
       title_text = "#{base_title_string} | #{static_page.titleize}"
       home_title_spec = false
@@ -95,27 +97,17 @@ if yes?("Would you like to generate static pages?")
     stat_pages_integration_tests += 
       "
     describe \"#{static_page} page\" do
+      before { visit #{visit_page} }
 
-      it \"should have the h1 \'#{h1_text}\'\" do
-        visit #{visit_page}
-        page.should have_selector('h1', text: '#{h1_text}')
-      end
-
-      it \"should have the title '#{static_page.titleize}'\" do
-        visit #{visit_page}
-        page.should have_selector('title', 
-                  text: \"#{title_text}\")
-      end\n" 
-
+      it { should have_selector('h1', text: '#{h1_text}') }
+      it { should have_selector('title', \n\t\t\t\t text: '#{title_text}') }\n"
+        
       if home_title_spec
         stat_pages_integration_tests +=
-        "\n      it \"should not have a custom page title \" do
-        visit #{visit_page}
-        page.should_not have_selector('title', 
-                text: '| Home')\n      end\n\n    end\n"
+        "it { should_not have_selector 'title', text: '| Home' }\n\t\t\tend\t\tend\n"
       else
         stat_pages_integration_tests +=
-        "\n    end\n"
+        "\n\t\tend\n"
       end
 
   end # static_pages_array.each end
