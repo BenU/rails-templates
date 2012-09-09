@@ -75,13 +75,13 @@ if yes?("Would you like to generate static pages?")
   stat_pages_integration_tests = 
     "require 'spec_helper'
 
-  describe 'Static Pages' do
+describe 'Static Pages' do
 
-    let(:base_title) { \"#{base_title_string}\" } 
+  let(:base_title) { \"#{base_title_string}\" } 
 
-    subject { page }
+  subject { page }
 
-    "
+  "
   static_pages_array.each do |static_page|
     if static_page == "home"
       visit_page = 'root_path'
@@ -100,11 +100,11 @@ if yes?("Would you like to generate static pages?")
       before { visit #{visit_page} }
 
       it { should have_selector('h1', text: '#{h1_text}') }
-      it { should have_selector('title', \n\t\t\t\t text: '#{title_text}') }\n"
+      it { should have_selector('title', \n\t\t\t\t\t\t\t\t text: '#{title_text}') }\n"
         
       if home_title_spec
         stat_pages_integration_tests +=
-        "it { should_not have_selector 'title', text: '| Home' }\n\t\t\tend\t\tend\n"
+        "\t\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
       else
         stat_pages_integration_tests +=
         "\n\t\tend\n"
