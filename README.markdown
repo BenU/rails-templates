@@ -25,9 +25,10 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Sept 9, 02012**
+**TODO's Sept 11, 02012**
 * add full_title utility to specs, then refactor to test full_title method
-* finish setting up authentication
+* finish setting up authentication -- I'm thinking that I'm going to use an 
+authentication gem now...
 * offer dynamic attributes to user resource created in authentication
 * create rvm gemset
 * set up for email with sendgrid
