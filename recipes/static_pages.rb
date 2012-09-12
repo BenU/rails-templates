@@ -71,6 +71,12 @@ if yes?("Would you like to generate static pages?")
 
   # generate some integration tests for the static pages
   puts "generating some static pages integration tests!"
+  # get full_title method for use with specs
+  get "https://raw.github.com/BenU/rails-templates/master/spec/support/utilities.rb", 
+  "spec/support/utilities.rb"
+  gsub_file "spec/support/utilities.rb", /base_title_placeholder/, 
+    "base_title_string"
+
   static_pages_array = static_pages.split()
   stat_pages_integration_tests = 
     "require 'spec_helper'
@@ -86,12 +92,12 @@ describe 'Static Pages' do
     if static_page == "home"
       visit_page = 'root_path'
       h1_text = "#{app_name.titleize}"
-      title_text = "#{base_title_string}"
+      title_text = "full_title('')"
       home_title_spec = true
     else
       visit_page = "#{static_page}_path"
       h1_text = "#{static_page.titleize}"
-      title_text = "#{base_title_string} | #{static_page.titleize}"
+      title_text = "full_title('#{static_page.titleize}')"
       home_title_spec = false
     end
     stat_pages_integration_tests += 
