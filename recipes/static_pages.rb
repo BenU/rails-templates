@@ -106,7 +106,7 @@ describe 'Static Pages' do
       before { visit #{visit_page} }
 
       it { should have_selector('h1', text: '#{h1_text}') }
-      it { should have_selector('title', \n\t\t\t\t\t\t\t\t text: '#{title_text}') }\n"
+      it { should have_selector('title', \n\t\t\t\t\t\t\t\t text: #{title_text}) }\n"
         
       if home_title_spec
         stat_pages_integration_tests +=
