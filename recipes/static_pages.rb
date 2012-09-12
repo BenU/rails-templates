@@ -75,7 +75,7 @@ if yes?("Would you like to generate static pages?")
   get "https://raw.github.com/BenU/rails-templates/master/spec/support/utilities.rb", 
   "spec/support/utilities.rb"
   gsub_file "spec/support/utilities.rb", /base_title_placeholder/, 
-    "base_title_string"
+    "#{base_title_string}"
 
   static_pages_array = static_pages.split()
   stat_pages_integration_tests = 
