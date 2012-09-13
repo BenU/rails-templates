@@ -95,7 +95,7 @@ if yes?("Would you like to generate static pages?")
       it { should have_selector('title', text: full_title(page_title)) }
     end\n"
 
-  stat_pages_layout_links_tests += "\tit \"should have the right links on the layout\" do
+  stat_pages_layout_links_tests = "\tit \"should have the right links on the layout\" do
   visit root_path\n"
 
   static_pages_array.each do |static_page|
