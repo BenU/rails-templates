@@ -87,26 +87,32 @@ describe 'Static Pages' do
 
   subject { page }
 
+  shared_examples_for \"all static pages\" do
+    it { should have_selector('h1',    text: heading) }
+    it { should have_selector('title', text: full_title(page_title)) }
+  end
+
   "
   static_pages_array.each do |static_page|
     if static_page == "home"
       visit_page = 'root_path'
       h1_text = "#{app_name.titleize}"
-      title_text = "full_title('')"
+      title_text = "''"
       home_title_spec = true
     else
       visit_page = "#{static_page}_path"
       h1_text = "#{static_page.titleize}"
-      title_text = "full_title('#{static_page.titleize}')"
+      title_text = "'#{static_page.titleize}'"
       home_title_spec = false
     end
     stat_pages_integration_tests += 
       "
     describe \"#{static_page} page\" do
       before { visit #{visit_page} }
+      let(:heading)     { '#{h1_text}' }
+      let(:page_title)  { #{title_text} }
 
-      it { should have_selector('h1', text: '#{h1_text}') }
-      it { should have_selector('title', \n\t\t\t\t\t\t\t\t text: #{title_text}) }\n"
+      it_should_behave_like \"all static pages\"\n"
         
       if home_title_spec
         stat_pages_integration_tests +=
