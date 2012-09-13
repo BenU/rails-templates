@@ -25,7 +25,8 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Sept 11, 02012**
+**TODO's Sept 12, 02012**
+* correct layout of static pages integration layout links specs
 * add full_title utility to specs, then refactor to test full_title method
 * finish setting up authentication -- I'm thinking that I'm going to use an 
 authentication gem now...
