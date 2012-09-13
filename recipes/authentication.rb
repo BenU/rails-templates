@@ -6,6 +6,9 @@ if yes?("Would you like to add user authentication?")
   get "https://raw.github.com/BenU/rails-templates/master/spec/requests/user_pages_spec.rb", 
   "spec/requests/user_pages_spec.rb"
 
+  # ***** Add click_link "Sign up now!" integration test to end of layout links specs 
+  # on static_pages integration tests
+
   # Uncomment "# gem 'bcrypt-ruby'" in gemfile
   gsub_file "Gemfile", /# gem 'bcrypt-ruby', /, "gem 'bcrypt-ruby',"
   run "bundle install"
@@ -35,7 +38,6 @@ if yes?("Would you like to add user authentication?")
   remove_file "spec/models/user_spec.rb"
   get "https://raw.github.com/BenU/rails-templates/master/spec/models/user_spec.rb",
   "spec/models/user_spec.rb" 
-
 
   # update user controller, views and integration tests
   apply "https://raw.github.com/BenU/rails-templates/master/recipes/user_vc.rb"

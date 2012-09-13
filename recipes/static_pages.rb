@@ -25,7 +25,11 @@ if yes?("Would you like to generate static pages?")
 
   # add links to static pages in page footer
   static_pages_array.each do |static_page|
-    if static_page != "home"
+    if static_page == "home"
+      insert_into_file "app/views/layouts/_header.html.erb",
+      "\t<%= link_to \"Home\", root_path %>\n\t",
+      after: "<nav id=\"navigation\">"
+    else
       insert_into_file "app/views/layouts/_footer.html.erb",
       "\t<%= link_to \"#{static_page}\", #{static_page}_path %>\n\t",
       before: "</nav>"
@@ -78,19 +82,21 @@ if yes?("Would you like to generate static pages?")
     "#{base_title_string}"
 
   static_pages_array = static_pages.split()
-  stat_pages_integration_tests = 
-    "require 'spec_helper'
+  stat_pages_integration_tests = "\t\trequire 'spec_helper'
+  
+  describe 'Static Pages' do
 
-describe 'Static Pages' do
+    let(:base_title) { \"#{base_title_string}\" } 
 
-  let(:base_title) { \"#{base_title_string}\" } 
+    subject { page }
 
-  subject { page }
+    shared_examples_for \"all static pages\" do
+      it { should have_selector('h1',    text: heading) }
+      it { should have_selector('title', text: full_title(page_title)) }
+    end\n"
 
-  shared_examples_for \"all static pages\" do
-    it { should have_selector('h1',    text: heading) }
-    it { should have_selector('title', text: full_title(page_title)) }
-  end\n"
+  stat_pages_layout_links_tests += "\tit \"should have the right links on the layout\" do
+  visit root_path\n"
 
   static_pages_array.each do |static_page|
     if static_page == "home"
@@ -104,6 +110,7 @@ describe 'Static Pages' do
       title_text = "'#{static_page.titleize}'"
       home_title_spec = false
     end
+    
     stat_pages_integration_tests += "\n\t\tdescribe \"#{static_page} page\" do
       before { visit #{visit_page} }
       let(:heading)     { '#{h1_text}' }
@@ -112,16 +119,18 @@ describe 'Static Pages' do
       it_should_behave_like \"all static pages\"\n"
         
       if home_title_spec
-        stat_pages_integration_tests +=
-        "\t\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
+        stat_pages_integration_tests += "\t\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
+        stat_pages_layout_links_tests += "click_link \"Home\"
+        page.should have_selector 'title', text: full_title('#{title_text}')
+        "
       else
-        stat_pages_integration_tests +=
-        "\n\t\tend\n"
+        stat_pages_integration_tests += "\n\t\tend\n"
+        stat_pages_layout_links_tests += "click_link \"#{h1_text}\"
+        page.should have_selector 'title', text: full_title('#{title_text}')\n"
       end
-
   end # static_pages_array.each end
-  stat_pages_integration_tests += "
-end"
+
+  stat_pages_integration_tests += "\n#{stat_pages_layout_links_tests}\nend"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
 
   git :add => "."
