@@ -111,7 +111,7 @@ describe 'Static Pages' do
       home_title_spec = false
     end
     
-    stat_pages_integration_tests += "\n\t\tdescribe \"#{static_page} page\" do
+    stat_pages_integration_tests += "\n\tdescribe \"#{static_page} page\" do
       before { visit #{visit_page} }
       let(:heading)     { '#{h1_text}' }
       let(:page_title)  { #{title_text} }
