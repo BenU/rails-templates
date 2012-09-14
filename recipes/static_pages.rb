@@ -124,12 +124,12 @@ if yes?("Would you like to generate static pages?")
       page.should have_selector 'title', text: full_title(#{title_text})\n"
       else
         stat_pages_integration_tests += "\n\t\tend\n"
-        stat_pages_layout_links_tests += "\t\tclick_link \"#{h1_text}\"
-  page.should have_selector 'title', text: full_title(#{title_text})\n"
+        stat_pages_layout_links_tests += "\t\t\tclick_link \"#{h1_text}\"
+      page.should have_selector 'title', text: full_title(#{title_text})\n"
       end
   end # static_pages_array.each end
 
-  stat_pages_integration_tests += "\n#{stat_pages_layout_links_tests}\n\tend\nend"
+  stat_pages_integration_tests += "\n#{stat_pages_layout_links_tests}\tend\nend"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
 
   git :add => "."
