@@ -112,11 +112,11 @@ describe 'Static Pages' do
     end
     
     stat_pages_integration_tests += "\n\tdescribe \"#{static_page} page\" do
-      before { visit #{visit_page} }
-      let(:heading)     { '#{h1_text}' }
-      let(:page_title)  { #{title_text} }
+    before { visit #{visit_page} }
+    let(:heading)     { '#{h1_text}' }
+    let(:page_title)  { #{title_text} }
 
-      it_should_behave_like \"all static pages\"\n"
+    it_should_behave_like \"all static pages\"\n"
         
       if home_title_spec
         stat_pages_integration_tests += "\t\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
