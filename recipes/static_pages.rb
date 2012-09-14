@@ -95,7 +95,7 @@ describe 'Static Pages' do
     it { should have_selector('title', text: full_title(page_title)) }
   end\n"
 
-  stat_pages_layout_links_tests = "\t\tit \"should have the right links on the layout\" do
+  stat_pages_layout_links_tests = "\tit \"should have the right links on the layout\" do
     \tvisit root_path\n"
 
   static_pages_array.each do |static_page|
@@ -119,7 +119,7 @@ describe 'Static Pages' do
     it_should_behave_like \"all static pages\"\n"
         
       if home_title_spec
-        stat_pages_integration_tests += "\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
+        stat_pages_integration_tests += "\t\tit { should_not have_selector 'title', text: '| Home' }\n\tend\n"
         stat_pages_layout_links_tests += "\t\t\tclick_link \"Home\"
       page.should have_selector 'title', text: full_title(#{title_text})\n"
       else
