@@ -119,11 +119,11 @@ describe 'Static Pages' do
     it_should_behave_like \"all static pages\"\n"
         
       if home_title_spec
-        stat_pages_integration_tests += "\t\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
+        stat_pages_integration_tests += "\t\tit { should_not have_selector 'title', text: '| Home' }\n\t\tend\n"
         stat_pages_layout_links_tests += "\t\t\tclick_link \"Home\"
       page.should have_selector 'title', text: full_title(#{title_text})\n"
       else
-        stat_pages_integration_tests += "\n\t\tend\n"
+        stat_pages_integration_tests += "\n\tend\n"
         stat_pages_layout_links_tests += "\t\t\tclick_link \"#{h1_text}\"
       page.should have_selector 'title', text: full_title(#{title_text})\n"
       end
