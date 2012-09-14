@@ -84,16 +84,16 @@ if yes?("Would you like to generate static pages?")
   static_pages_array = static_pages.split()
   stat_pages_integration_tests = "require 'spec_helper'
   
-  describe 'Static Pages' do
+describe 'Static Pages' do
 
-    let(:base_title) { \"#{base_title_string}\" } 
+  let(:base_title) { \"#{base_title_string}\" } 
 
-    subject { page }
+  subject { page }
 
-    shared_examples_for \"all static pages\" do
-      it { should have_selector('h1',    text: heading) }
-      it { should have_selector('title', text: full_title(page_title)) }
-    end\n"
+  shared_examples_for \"all static pages\" do
+    it { should have_selector('h1',    text: heading) }
+    it { should have_selector('title', text: full_title(page_title)) }
+  end\n"
 
   stat_pages_layout_links_tests = "\t\tit \"should have the right links on the layout\" do
     \tvisit root_path\n"
@@ -129,7 +129,7 @@ if yes?("Would you like to generate static pages?")
       end
   end # static_pages_array.each end
 
-  stat_pages_integration_tests += "\n#{stat_pages_layout_links_tests}\tend\nend"
+  stat_pages_integration_tests += "\n#{stat_pages_layout_links_tests}\t\tend\nend"
   create_file "spec/requests/static_pages_spec.rb", stat_pages_integration_tests
 
   git :add => "."
