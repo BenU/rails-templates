@@ -75,10 +75,15 @@ if yes?("Would you like to generate static pages?")
 
   # generate some integration tests for the static pages
   puts "generating some static pages integration tests!"
+  
   # get full_title method for use with specs
   get "https://raw.github.com/BenU/rails-templates/master/spec/support/utilities.rb", 
   "spec/support/utilities.rb"
-  gsub_file "spec/support/utilities.rb", /base_title_placeholder/, 
+  # create specs for application helper full_title method
+  get "https://raw.github.com/BenU/rails-templates/master/spec/helpers/application_helper_spec.rb", 
+  "spec/helpers/application_helper_spec.rb"
+  # update spec file with base_title
+  gsub_file "spec/helpers/application_helper_spec.rb", /base_title_placeholder/, 
     "#{base_title_string}"
 
   static_pages_array = static_pages.split()
