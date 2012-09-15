@@ -25,16 +25,16 @@ I use the following:
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
-**TODO's Sept 12, 02012**
-* correct layout of static pages integration layout links specs
-* add full_title utility to specs, then refactor to test full_title method
-* finish setting up authentication -- I'm thinking that I'm going to use an 
-authentication gem now...
-* offer dynamic attributes to user resource created in authentication
+**TODO's Sept 15, 02012**
 * create rvm gemset
-* set up for email with sendgrid
-* add forgot password to authentication
+* Set up authentication, authorization
+  - Review [can can](https://github.com/ryanb/cancan) and [Devise](https://github.com/plataformatec/devise)for best (good enough) implimentation of roles.
+  - solicit user attributes +/- role(s)
+  - solicit authentication attributes -- password reset, etc.
+  - set up for email with sendgrid
+  - dynamically generate user/role model(s) and integration tests 
 * Add nifty generator gem or role own scaffold generator
+* Security checklist, brakeman, etc.  See [The Ruby Toolbox](https://www.ruby-toolbox.com/) [Security Tools page](https://www.ruby-toolbox.com/categories/security_tools).
 
 –
 
