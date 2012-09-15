@@ -96,7 +96,7 @@ describe 'Static Pages' do
   end\n"
 
   stat_pages_layout_links_tests = "\tit \"should have the right links on the layout\" do
-      visit root_path\n"
+    visit root_path\n"
 
   static_pages_array.each do |static_page|
     if static_page == "home"
