@@ -6,15 +6,16 @@ Most recently I've started working my way through ["The Rails View"](http://prag
 
 # Usage
 
-1) create new [www.github.com] repository with name of your new app.  Note: After making repository on github, do not follow additional instructions for github deployment in the command line.  All that is automated in the template.
+1) create new [GitHub](www.github.com) repository with name of your new app.  Note: After making repository on github, do not follow additional instructions for github deployment in the command line.  All that is automated in the template.
 
 2) Create postgres database
-- in rails directory
-```$ mkdir [new app name]
-$ cd [new app name]
-$ postgres -D /usr/local/var/postgres
+in rails directory
+    $ mkdir [new app name]
+    $ cd [new app name]
+    $ postgres -D /usr/local/var/postgres
+
 3) In new tab:
-$ rails new [app name] -m [template file or url]```
+    $ rails new [app name] -m [template file or url]```
 
 Note: I changed my default rails new generator to skip test unit and use postgresql with
 `$ echo -d postgresql -T > ~/.railsrc`
@@ -22,6 +23,7 @@ So:
 I don’t do this:  `$ rails new [app name] -d postgresql --skip-test-unit -m [template file]`
 I use the following:
 `$ rails new [app name] -m [template file or url]`
+
 eg
 `$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
 
