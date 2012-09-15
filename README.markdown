@@ -24,15 +24,17 @@ Note: I changed my default rails new generator to skip test unit and use postgre
 So:
 I don’t do this:  `$ rails new [app name] -d postgresql --skip-test-unit -m [template file]`
 I use the following:
-`$ rails new [app name] -m [template file or url]`
+
+    $ rails new [app name] -m [template file or url]
 
 eg
-`$ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb`
+
+    $ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb
 
 **TODO's Sept 15, 02012**
 * create rvm gemset
 * Set up authentication, authorization
-  - Review [can can](https://github.com/ryanb/cancan) and [Devise](https://github.com/plataformatec/devise)for best (good enough) implimentation of roles.
+  - Review [can can](https://github.com/ryanb/cancan) and [Devise](https://github.com/plataformatec/devise) for best (good enough) implimentation of roles.
   - solicit user attributes +/- role(s)
   - solicit authentication attributes -- password reset, etc.
   - set up for email with sendgrid
