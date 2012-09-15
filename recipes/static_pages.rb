@@ -96,7 +96,7 @@ describe 'Static Pages' do
   end\n"
 
   stat_pages_layout_links_tests = "\tit \"should have the right links on the layout\" do
-    visit root_path\n"
+      visit root_path\n"
 
   static_pages_array.each do |static_page|
     if static_page == "home"
@@ -111,12 +111,12 @@ describe 'Static Pages' do
       home_title_spec = false
     end
     
-    stat_pages_integration_tests += "\n\tdescribe \"#{static_page} page\" do
-    before { visit #{visit_page} }
-    let(:heading)     { '#{h1_text}' }
-    let(:page_title)  { #{title_text} }
+    stat_pages_integration_tests += "\n  describe \"#{static_page} page\" do
+  before { visit #{visit_page} }
+  let(:heading)     { '#{h1_text}' }
+  let(:page_title)  { #{title_text} }
 
-    it_should_behave_like \"all static pages\"\n"
+  it_should_behave_like \"all static pages\"\n"
         
       if home_title_spec
         stat_pages_integration_tests += "\t\tit { should_not have_selector 'title', text: '| Home' }\n\tend\n"
