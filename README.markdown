@@ -10,12 +10,14 @@ Most recently I've started working my way through ["The Rails View"](http://prag
 
 2) Create postgres database
 in rails directory
+
     $ mkdir [new app name]
     $ cd [new app name]
     $ postgres -D /usr/local/var/postgres
 
 3) In new tab:
-    $ rails new [app name] -m [template file or url]```
+
+    $ rails new [app name] -m [template file or url]
 
 Note: I changed my default rails new generator to skip test unit and use postgresql with
 `$ echo -d postgresql -T > ~/.railsrc`
