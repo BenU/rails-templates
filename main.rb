@@ -1,5 +1,8 @@
 # main rails template with all component parts
 
+# set up private rvm gemset
+apply "https://raw.github.com/BenU/rails-templates/master/recipes/rvm.rb"
+
 # add my default gemfiles
 apply "https://raw.github.com/BenU/rails-templates/master/recipes/gemfile.rb"
 
