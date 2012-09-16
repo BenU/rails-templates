@@ -6,9 +6,18 @@
 puts "Setting up RVM gemset and installing bundled gems (may take a while) ... "
 
 # Need to strip colors in case rvm_pretty_print_flag is enabled in user's .rvmrc
-rvm_list = `rvm list`.gsub(Regexp.new("\e\\[.?.?.?m"), '')
+rvm_list = %x( rvm list )
 
-current_ruby = rvm_list.match(/=> ([^ ]+)/)[1]
+puts "The list of available rubies is:"
+puts rvm_list
+
+rubies = []
+rvm_list_array = rvm_list.split()
+rvm_list_array.each do |ruby|
+  rubies << ruby if ruby[0..3] == "ruby"
+end
+current_ruby = rubies[-1]
+
 desired_ruby = ask("Which RVM Ruby would you like to use? [#{current_ruby}]")
 desired_ruby = current_ruby if desired_ruby.blank?
 

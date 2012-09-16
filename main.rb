@@ -1,7 +1,9 @@
 # main rails template with all component parts
 
 # set up private rvm gemset
-apply "https://raw.github.com/BenU/rails-templates/master/recipes/rvm.rb"
+if yes?("Set up private rvm gemset for this app?")
+  apply "https://raw.github.com/BenU/rails-templates/master/recipes/rvm.rb"
+end
 
 # add my default gemfiles
 apply "https://raw.github.com/BenU/rails-templates/master/recipes/gemfile.rb"
