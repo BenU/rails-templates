@@ -31,16 +31,21 @@ eg
 
     $ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb
 
-**TODO's Sept 15, 02012**
-* create rvm gemset
+**TODO's Sept 17, 02012**
 * Set up authentication, authorization
   - Review [can can](https://github.com/ryanb/cancan) and [Devise](https://github.com/plataformatec/devise) for best (good enough) implimentation of roles.
-  - solicit user attributes +/- role(s)
   - solicit authentication attributes -- password reset, etc.
+  - solicit user attributes +/- role(s)
   - set up for email with sendgrid
   - dynamically generate user/role model(s) and integration tests 
 * Add nifty generator gem or role own scaffold generator
-* Security checklist, brakeman, etc.  See [The Ruby Toolbox](https://www.ruby-toolbox.com/) [Security Tools page](https://www.ruby-toolbox.com/categories/security_tools).
+* Performant checklist - Remove unneeded aspects of rails, New Relic, chaching, sprites, t/c Blitz, Cloud Assault
+* uptime checklist - Ranger
+* error logging - Airbrake, Sentry, StatsMix, StillAlive
+* SSL encryption
+* Security checklist, brakeman, etc.  T/c Strong Parameters,  See [The Ruby Toolbox](https://www.ruby-toolbox.com/) [Security Tools page](https://www.ruby-toolbox.com/categories/security_tools).
+* Keep site up to date with SourceNinja
+* See ThoughtBot "[The Playbook](http://playbook.thoughtbot.com/)" for more ideas on integrating best practices.
 
 –
 
