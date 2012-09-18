@@ -1,5 +1,16 @@
 # authentication
 if yes?("Would you like to add user authentication?")
+  gem("devise", "~> 2.1.2")
+
+   # ask what attributes:datatypes to add to user model
+   # in format [attribute]:[data type]:[optional index/unique]
+   # add template for scaffold generator based on nifty generator's
+   # see http://railscasts.com/episodes/218-making-generators-in-rails-3?view=asciicast
+   # http://guides.rubyonrails.org/generators.html#customizing-your-workflow
+   # https://github.com/giuseb/nifty-generators/tree/master/rails_generators/nifty_scaffold/templates/actions
+   # I think for now I'm going to add all 7 RESTful actions to the template
+   # and either delete the unused one's dynamically or have the developer do so... 
+
   run "rails g resource user email password_digest"
 
   # get user pages integration tests
