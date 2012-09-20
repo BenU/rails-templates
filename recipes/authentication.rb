@@ -19,13 +19,13 @@ if yes?("Would you like to add user authentication?")
 
   unless @static_pages
     insert_into_file "config/routes.rb",
-      "\n  root :to => \"public/index.html\"\n",
+      "\n  root :to => \"public#index.html\"\n",
       after: "::Application.routes.draw do"
   end
 
   user_attributes = ask("What attributes would you like for your user model? [field[:type][:index/unique]]")
   puts "#{user_attributes}"
-  generate "model", "User #{user_attributes}"
+  run "rails g model User #{user_attributes}"
   # generate attributes based specs for user model
 
   # generate user model
