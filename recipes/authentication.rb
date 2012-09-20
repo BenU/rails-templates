@@ -24,7 +24,7 @@ if yes?("Would you like to add user authentication?")
   end
 
   user_attributes = ask("What attributes would you like for your user model? [field[:type][:index/unique]]")
-
+  puts "#{user_attributes}"
   generate "model", "User #{user_attributes}"
   # generate attributes based specs for user model
 
