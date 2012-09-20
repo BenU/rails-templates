@@ -2,7 +2,7 @@ require 'spec_helper'
 describe User do
   before do 
     @user = User.new(email: "user@example.com", password: "foobar",
-                      password_confirmation: "foobar") 
+                      password_confirmation: "foobar")#additional_attributes 
   end
 
   subject { @user }
@@ -11,7 +11,8 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
-  it { should respond_to(:authenticate) }
+  it { should respond_to(:remember_me) }
+  #_additional_attributes_specs
 
   it { should be_valid }
 
@@ -81,18 +82,6 @@ describe User do
     it { should be_invalid }
   end
 
-  describe "return value of authenticate method" do
-    before { @user.save }
-    let(:found_user) { User.find_by_email(@user.email) }
+  # add pending specs for additional attributes
 
-    describe "with valid password" do
-      it { should == found_user.authenticate(@user.password) }
-    end
-
-    describe "with invalid password" do
-      let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-      it { should_not == user_for_invalid_password }
-      specify { user_for_invalid_password.should be_false }
-    end
-  end
 end
