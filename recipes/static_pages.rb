@@ -1,5 +1,6 @@
 # generate static pages
 if yes?("Would you like to generate static pages?")
+  @static_pages = true
   static_pages = "home "
   static_pages += ask("In addition to home, what other static pages do you want created?
   Please separate your pages by spaces:")

@@ -47,6 +47,12 @@ if yes?("Would you like to store source in GitHub repository?")
     until (run "heroku create #{app_name_attempt}") do
       app_name_attempt = ask("#{app_name_attempt} didn't work.  What name do you want to try next?")
     end
+
+    if @authentication
+      # change this to gsub since more than one 'end' ****** 
+      gsub_file "config/environments/production.rb", /www.myappdomain.com/,
+        "http://#{app_name_attempt}.herokuapp.com/"
+    end
     run "git push"
     run "git push heroku master"
     run "heroku run rake db:migrate"
