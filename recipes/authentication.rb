@@ -5,9 +5,13 @@ if yes?("Would you like to add user authentication?")
   run 'bundle install'
   run 'rails generate devise:install'
 
+
+  # update email regex in config/initializers/devise.rb
+  # with   # config.email_regexp = /\A[^@]+@[^@]+\z/
+  # config.email_regexp = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   run 'subl config/initializers/devise.rb'
 
-  until yes?("Have you reviewed the devise initializer, updating the `mailer_sender?`")
+  until yes?("Have you reviewed the devise initializer? eg update the `mailer_sender?`")
   end
 
   gsub_file "config/environments/development.rb", /\nend/,
@@ -49,8 +53,25 @@ if yes?("Would you like to add user authentication?")
   # specs for new user attributes.  Some are `pending` placeholders
 
   user_attributes.split().each do |attribute_string|
-    attribute = attribute_string.split(":")[0]
+    attribute, data_type = attribute_string.split(":")[0], attribute_string.split(":")[1]
+
     attribute_default = ask("In user_spec.rb, what do you want the default value for #{attribute} to be?")
+    # convert `attribute_default` string to appropriate data-type
+    case data_type
+    when "boolean"
+      attribute_default = (attribute_default == "true") ? true : false
+    when "decimal"
+      require 'bigdecimal'
+      attribute_default = BigDecimal.new(attribute_default)
+    when "float"
+      attribute_default = attribute_default.to_f
+    when "integer"
+      attribute_default = attribute_default.to_i
+    else 
+      # just keep as string...
+    end
+
+
     gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
       ",\n\t\t\t\t#{attribute}: \"#{attribute_default}\")#additional_attributes"
 

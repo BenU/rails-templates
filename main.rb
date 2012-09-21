@@ -34,7 +34,6 @@ apply "https://raw.github.com/BenU/rails-templates/master/recipes/static_pages.r
 # logo -- add or use placeholder
 apply "https://raw.github.com/BenU/rails-templates/master/recipes/logo.rb"
 
-# **** this recipe is not done yet.  Lacks sessions, etc.  
 # authentication
 apply "https://raw.github.com/BenU/rails-templates/master/recipes/authentication.rb"
 

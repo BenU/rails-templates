@@ -33,8 +33,7 @@ apply "~/programing/rails/rails-templates/recipes/static_pages.rb"
 
 # logo -- add or use placeholder
 apply "~/programing/rails/rails-templates/recipes/logo.rb"
-
-# **** this recipe is not done yet.  Lacks sessions, etc.  
+  
 # authentication
 apply "~/programing/rails/rails-templates/recipes/authentication.rb"
 
