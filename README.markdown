@@ -31,14 +31,25 @@ eg
 
     $ rails new [app name] -m https://raw.github.com/BenU/rails-templates/master/main.rb
 
-**TODO's Sept 17, 02012**
-* Set up authentication, authorization
-  - Review [can can](https://github.com/ryanb/cancan) and [Devise](https://github.com/plataformatec/devise) for best (good enough) implimentation of roles.
-  - solicit authentication attributes -- password reset, etc.
-  - solicit user attributes +/- role(s)
-  - set up for email with sendgrid
-  - dynamically generate user/role model(s) and integration tests 
-* Add nifty generator gem or role own scaffold generator
+# A Note on Testing
+
+I'm convinced that testing is important to developing robust apps that can be refactored and upgraded with confidence.  That said, testing appropriately can be hard.  I've lost weeks trying to figure out how to test appropriately when I've already figured out how to get the "test" to pass.  For the purposes of this template, I will set up tests for the produced app.  This allows the template to produce apps which are well on their way to appropriate testing but leaves the template itself more brittle.  I am aware of that deficit but currently unsure of the code needed to test the template itself.  I'll continue to look for solutions -- examples on testing gems in [Rails Antipatterns](http://railsantipatterns.com/) looks promising -- as I go along but won't let not understanding that concept slow me down yet here.  Please reach out if you have insight into appropriately testing one's template, though.  I'd love to hear from you!
+
+**TODO's Sept 23, 02012**
+* Finish setting up authentication
+  - solicit accessible attributes
+  - set up integration tests to make sure appropriate attributes are on signup/edit forms
+  - update user model such that appropriate attributes are attribute accessible
+  - generate integration tests to sign up user with valid attribute values but not with invalid attribute values 
+  - update user model with attribute validations
+  - generate integration test for user destroying their own account
+  - generate tests for appropriate utility links when signed in/out
+  - add utility links to layouts/application.html.erb
+  - integration test for email sent when password forgotten
+  - set up for email with sendgrid and get tests to pass
+
+**Additional Items to do specific to generated app
+* Set up [can can](https://github.com/ryanb/cancan) for roles and authorization
 * Performant checklist - Remove unneeded aspects of rails, New Relic, chaching, sprites, t/c Blitz, Cloud Assault
 * uptime checklist - Ranger
 * error logging - Airbrake, Sentry, StatsMix, StillAlive
