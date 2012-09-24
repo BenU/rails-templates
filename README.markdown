@@ -37,7 +37,7 @@ I'm convinced that testing is important to developing robust apps that can be re
 
 **TODO's Sept 23, 02012**
 * Finish setting up authentication
-  - solicit accessible attributes
+  - consider adding "--format documentation" to .rspec file
   - set up integration tests to make sure appropriate attributes are on signup/edit forms
   - update user model such that appropriate attributes are attribute accessible
   - generate integration tests to sign up user with valid attribute values but not with invalid attribute values 
@@ -48,7 +48,7 @@ I'm convinced that testing is important to developing robust apps that can be re
   - integration test for email sent when password forgotten
   - set up for email with sendgrid and get tests to pass
 
-**Additional Items to do specific to generated app
+**Additional Items to do specific to generated app**
 * Set up [can can](https://github.com/ryanb/cancan) for roles and authorization
 * Performant checklist - Remove unneeded aspects of rails, New Relic, chaching, sprites, t/c Blitz, Cloud Assault
 * uptime checklist - Ranger

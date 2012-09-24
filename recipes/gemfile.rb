@@ -17,5 +17,8 @@ gem_group :test do
  gem("spork", "~> 0.9.2")
  gem('capybara', '~> 1.1.2')
  gem('factory_girl_rails', '~> 4.0.0')
+ gem("database_cleaner", "~> 0.8.0")
+ gem("launchy", "~> 2.1.2")
+
 end
 run 'bundle install'

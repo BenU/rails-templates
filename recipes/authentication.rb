@@ -53,25 +53,34 @@ if yes?("Would you like to add user authentication?")
 
   # udpate `spec/models/user_spec.rb` with dynamically generated
   # specs for new user attributes.  Some are `pending` placeholders
+  attributes_accesible = []
+  attributes_protected = []
+
   user_attributes.split().each do |attribute_string|
     attribute, data_type = attribute_string.split(":")[0], attribute_string.split(":")[1]
 
+    if yes?("Do you want #{attribute} to be attributes_accesible?")
+      attributes_accesible << attribute
+    else
+      attributes_protected << attribute
+    end
+
     attribute_default = ask("In user_spec.rb, what do you want the #{data_type} default value for #{attribute} to be?")
     # convert `attribute_default` string to appropriate data-type
-    case data_type
-    when "boolean"
-      attribute_default = (attribute_default == "true") ? true : false
-    when "decimal"
-      require 'bigdecimal'
-      attribute_default = BigDecimal.new(attribute_default)
-    when "float"
-      attribute_default = attribute_default.to_f
-    when "integer"
-      attribute_default = attribute_default.to_i
-    else 
-      # just keep as string... and add quotation marks
-      attribute_default = "\"#{attribute_default}\""
-    end
+    attribute_default = case data_type
+                        when "boolean"
+                          attribute_default == "true" ? true : false
+                        when "decimal"
+                          require 'bigdecimal'
+                          BigDecimal.new(attribute_default)
+                        when "float"
+                          attribute_default.to_f
+                        when "integer"
+                          attribute_default.to_i
+                        else 
+                          # just keep as string... and add quotation marks
+                          "\"#{attribute_default}\""
+                        end
 
     gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
       ",\n\t\t\t\t\t\t\t\t\t\t\t#{attribute}: #{attribute_default})#additional_attributes"
@@ -85,16 +94,16 @@ if yes?("Would you like to add user authentication?")
       after: "# add pending specs for additional attributes"
 
   end
-  # remove #additional_attributes
-  # remove "#_additional_attributes_specs"
-  # remove "# add pending specs for additional attributes"
 
+  # remove placeholders from `spec/models/user_spec.rb`
+  gsub_file "spec/models/user_spec.rb", /#additional_attributes/, ""
+  gsub_file "spec/models/user_spec.rb", /#_additional_attributes_specs/, ""
+  gsub_file "spec/models/user_spec.rb", /# add pending specs for additional attributes/, ""
 
+  until yes?("Get spork running in additional terminal tab.  Ready to proceed?")
+  end
+  run "rspec spec"
 
-  # add code to solicit getting spork running in additional tab
-  # rake "rspec/spec"
-
-  # rake "rspec/spec"
   run 'rails generate devise User'
 
   # add email validation and password_confirmation presence: true to models/user.rb
@@ -120,7 +129,16 @@ if yes?("Would you like to add user authentication?")
 
   rake "db:migrate"
   rake "db:test:prepare"
-  # rake "rspec/spec"
+
+  until yes?("Restart spork in additional terminal tab.  Ready to proceed?")
+  end
+  run "rspec spec"
+
+  # set up integration tests to make sure the all attributes_accessible
+  # attributes are on the sign up form.
+
+  # set up integration tests to make sure that all attributes_protected
+  # attributes are not on the sign up form
 
 =begin
 
