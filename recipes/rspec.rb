@@ -7,8 +7,13 @@ rspec_defaults =
     config.generators do |g|
       g.view_specs false
       g.helper_specs false
-      g.controller_specs false
       g.routing_specs false
+      # The following changes from [Everyday Rails Testing with Rspec](http://everydayrails.com/2012/06/13/rspec-book-complete.html)
+      g.controller_specs true
+      g.test_framework :rspec
+      g.fixtures true
+      g.request_specs true
+      g.fixture_replacement :factory_girl, dir: \"spec/factories\"
     end
 \n"
 insert_into_file 'config/application.rb', rspec_defaults, 
