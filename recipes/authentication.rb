@@ -57,7 +57,8 @@ if yes?("Would you like to add user authentication?")
   attributes_protected = []
 
   user_attributes.split().each do |attribute_string|
-    attribute, data_type = attribute_string.split(":")[0], attribute_string.split(":")[1]
+    attribute_array = attribute_string.split(":")
+    attribute, data_type, index_unique = attribute_array[0], attribute_array[1], attribute_array[2]    
 
     if yes?("Do you want #{attribute} to be attributes_accesible?")
       attributes_accesible << attribute
@@ -65,7 +66,16 @@ if yes?("Would you like to add user authentication?")
       attributes_protected << attribute
     end
 
-    attribute_default = ask("In user_spec.rb, what do you want the #{data_type} default value for #{attribute} to be?")
+    unless index_unique == "unique"
+      attribute_default = ask("In user_spec.rb, what do you want the #{data_type} default value for #{attribute} to be?")
+    else
+      # attribute is unique and should include a #{n}
+      puts "In user_spec.rb, what do you want the #{data_type} default value for #{attribute} to be?"
+      until /\#\{n\}/ =~ attribute_default
+        attribute_default = ask("Include escaped \\#\\{n\\} ")
+      end
+    end
+
     # convert `attribute_default` string to appropriate data-type
     attribute_default = case data_type
                         when "boolean"
@@ -81,6 +91,37 @@ if yes?("Would you like to add user authentication?")
                           # just keep as string... and add quotation marks
                           "\"#{attribute_default}\""
                         end
+=begin
+Add attribute to factory
+
+if (index_unique == nil) || (index_unique == "index")  
+  insert_into_file "spec/factories/users.rb",
+    "\t#{attribute} \"#{attribute_default}\"\n",
+    after: "factory :user do\n"
+else # "unique"
+  insert_into_file "spec/factories/users.rb",
+    "\t sequence(:#{attribute}) { |n| \"#{attribute_default}\"\n" },
+    after: "factory :user do\n" 
+end
+  =begin
+    FactoryGirl.define do
+      factory :user do
+      end
+    end
+
+
+    FactoryGirl.define do 
+      factory :contact do
+          firstname "John"
+          lastname "Doe"
+          sequence(:email) { |n| "johndoe#{n}@example.com"}
+      end
+    end 
+  =end
+
+
+=end
+
 
     gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
       ",\n\t\t\t\t\t\t\t\t\t\t\t#{attribute}: #{attribute_default})#additional_attributes"
@@ -94,6 +135,9 @@ if yes?("Would you like to add user authentication?")
       after: "# add pending specs for additional attributes"
 
   end
+
+  # add email, password and password_confirmation to spec/factories/users.rb
+
 
   # remove placeholders from `spec/models/user_spec.rb`
   gsub_file "spec/models/user_spec.rb", /#additional_attributes/, ""

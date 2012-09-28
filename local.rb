@@ -2,7 +2,7 @@
 
 # set up private rvm gemset
 if yes?("Set up private rvm gemset for this app?")
-  apply "recipes/rvm.rb"
+  apply "~/programing/rails/rails-templates/recipes/rvm.rb"
 end
 
 # add my default gemfiles
