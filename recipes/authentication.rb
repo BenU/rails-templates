@@ -51,12 +51,17 @@ if yes?("Would you like to add user authentication?")
   get "https://raw.github.com/BenU/rails-templates/master/spec/models/user_spec.rb",
   "spec/models/user_spec.rb" 
 
+  # **** remove baseline factory and replace with empty user factory
+  remove_file "spec/factories/user.rb"
+  get "https://raw.github.com/BenU/rails-templates/master/spec/factories/user.rb",
+  "spec/factories/user.rb"  
+
   # udpate `spec/models/user_spec.rb` with dynamically generated
   # specs for new user attributes.  Some are `pending` placeholders
   attributes_accesible = []
   attributes_protected = []
 
-  user_attributes.split().each do |attribute_string|
+  user_attributes.split.each do |attribute_string|
     attribute_array = attribute_string.split(":")
     attribute, data_type, index_unique = attribute_array[0], attribute_array[1], attribute_array[2]    
 
@@ -72,11 +77,10 @@ if yes?("Would you like to add user authentication?")
       # attribute is unique and should include a #{n}
       puts "In user_spec.rb, what do you want the #{data_type} default value for #{attribute} to be?"
       until /\#\{n\}/ =~ attribute_default
-        attribute_default = ask("Include escaped \\#\\{n\\} ")
+        attribute_default = ask('Include #{n} in your unique default data:')
       end
     end
-
-    # convert `attribute_default` string to appropriate data-type
+     # convert `attribute_default` string to appropriate data-type
     attribute_default = case data_type
                         when "boolean"
                           attribute_default == "true" ? true : false
@@ -87,23 +91,25 @@ if yes?("Would you like to add user authentication?")
                           attribute_default.to_f
                         when "integer"
                           attribute_default.to_i
+                        when "date"
+                          # just keep as string... and add quotation marks
+                          "\"#{attribute_default}\""                          
                         else 
                           # just keep as string... and add quotation marks
                           "\"#{attribute_default}\""
                         end
-=begin
-Add attribute to factory
 
-if (index_unique == nil) || (index_unique == "index")  
-  insert_into_file "spec/factories/users.rb",
-    "\t#{attribute} \"#{attribute_default}\"\n",
-    after: "factory :user do\n"
-else # "unique"
-  insert_into_file "spec/factories/users.rb",
-    "\t sequence(:#{attribute}) { |n| \"#{attribute_default}\"\n" },
-    after: "factory :user do\n" 
-end
-  =begin
+    if (index_unique == nil) || (index_unique == "index")
+      insert_into_file "spec/factories/users.rb",
+        "    #{attribute} #{attribute_default}\n",
+        after: "factory :user do\n"
+    else # index_unique == "unique"
+      insert_into_file "spec/factories/users.rb",
+        "    sequence(:#{attribute}) { |n| #{attribute_default} }\n",
+        after: "factory :user do\n" 
+    end
+
+=begin
     FactoryGirl.define do
       factory :user do
       end
@@ -117,11 +123,7 @@ end
           sequence(:email) { |n| "johndoe#{n}@example.com"}
       end
     end 
-  =end
-
-
 =end
-
 
     gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
       ",\n\t\t\t\t\t\t\t\t\t\t\t#{attribute}: #{attribute_default})#additional_attributes"
@@ -136,7 +138,7 @@ end
 
   end
 
-  # add email, password and password_confirmation to spec/factories/users.rb
+  # **** add email, password and password_confirmation to spec/factories/users.rb
 
 
   # remove placeholders from `spec/models/user_spec.rb`
@@ -159,6 +161,8 @@ end
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true\n\n",
     before: "\nend"
+
+  # **** Add email, password and password_confirmation to user factory  
 
   run 'subl app/models/user.rb'
 
