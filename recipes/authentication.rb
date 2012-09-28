@@ -54,7 +54,7 @@ if yes?("Would you like to add user authentication?")
   # **** remove baseline factory and replace with empty user factory
   remove_file "spec/factories/users.rb"
   get "https://raw.github.com/BenU/rails-templates/master/spec/factories/users.rb",
-  "spec/factories/user.rb"  
+  "spec/factories/users.rb"  
 
   # udpate `spec/models/user_spec.rb` with dynamically generated
   # specs for new user attributes.  Some are `pending` placeholders
