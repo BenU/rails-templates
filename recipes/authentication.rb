@@ -52,8 +52,8 @@ if yes?("Would you like to add user authentication?")
   "spec/models/user_spec.rb" 
 
   # **** remove baseline factory and replace with empty user factory
-  remove_file "spec/factories/user.rb"
-  get "https://raw.github.com/BenU/rails-templates/master/spec/factories/user.rb",
+  remove_file "spec/factories/users.rb"
+  get "https://raw.github.com/BenU/rails-templates/master/spec/factories/users.rb",
   "spec/factories/user.rb"  
 
   # udpate `spec/models/user_spec.rb` with dynamically generated
@@ -126,7 +126,7 @@ if yes?("Would you like to add user authentication?")
 =end
 
     gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
-      ",\n\t\t\t\t\t\t\t\t\t\t\t#{attribute}: #{attribute_default})#additional_attributes"
+      ",\n                      #{attribute}: #{attribute_default})#additional_attributes"
 
     insert_into_file "spec/models/user_spec.rb",
       "  it { should respond_to(:#{attribute}) }\n",
