@@ -109,22 +109,6 @@ if yes?("Would you like to add user authentication?")
         after: "factory :user do\n" 
     end
 
-=begin
-    FactoryGirl.define do
-      factory :user do
-      end
-    end
-
-
-    FactoryGirl.define do 
-      factory :contact do
-          firstname "John"
-          lastname "Doe"
-          sequence(:email) { |n| "johndoe#{n}@example.com"}
-      end
-    end 
-=end
-
     gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
       ",\n                      #{attribute}: #{attribute_default})#additional_attributes"
 
@@ -138,8 +122,12 @@ if yes?("Would you like to add user authentication?")
 
   end
 
-  # **** add email, password and password_confirmation to spec/factories/users.rb
-
+  insert_into_file "spec/factories/users.rb",
+    '    sequence(:email) { |n| "person_#{n}@example.com" }
+    password "foobar"
+    password_confirmation "foobar"
+',
+    after: "factory :user do\n" 
 
   # remove placeholders from `spec/models/user_spec.rb`
   gsub_file "spec/models/user_spec.rb", /#additional_attributes/, ""

@@ -53,8 +53,9 @@ describe User do
 
   describe "when email address is already taken" do
     before do
+      @user.email = "benjamin@example.com"
       user_with_same_email = @user.dup
-      user_with_same_email.email = @user.email.upcase
+      user_with_same_email.email = @user.email.upcase      
       user_with_same_email.save
     end
 
