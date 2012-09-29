@@ -15,6 +15,10 @@ describe User do
 
   it { should be_valid }
 
+  describe "accessible attributes" do
+    pending "Specs to confirm protected attributes can't be mass assigned..."
+  end
+
   describe "when email is not present" do
     before { @user.email = " " }
     it { should_not be_valid }

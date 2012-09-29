@@ -67,8 +67,10 @@ if yes?("Would you like to add user authentication?")
 
     if yes?("Do you want #{attribute} to be attributes_accesible?")
       attributes_accesible << attribute
+      attribute_accesible = true
     else
       attributes_protected << attribute
+      attribute_accesible = false
     end
 
     unless index_unique == "unique"
@@ -80,7 +82,8 @@ if yes?("Would you like to add user authentication?")
         attribute_default = ask('Include #{n} in your unique default data:')
       end
     end
-     # convert `attribute_default` string to appropriate data-type
+    
+    # convert `attribute_default` string to appropriate data-type
     attribute_default = case data_type
                         when "boolean"
                           attribute_default == "true" ? true : false
@@ -99,6 +102,7 @@ if yes?("Would you like to add user authentication?")
                           "\"#{attribute_default}\""
                         end
 
+    # Add attribute to user factory
     if (index_unique == nil) || (index_unique == "index")
       insert_into_file "spec/factories/users.rb",
         "    #{attribute} #{attribute_default}\n",
@@ -109,9 +113,7 @@ if yes?("Would you like to add user authentication?")
         after: "factory :user do\n" 
     end
 
-    gsub_file "spec/models/user_spec.rb", /\)#additional_attributes/,
-      ",\n                      #{attribute}: #{attribute_default})#additional_attributes"
-
+    # add spec and pending placeholder for attribute to spec/models/user_spec.rb 
     insert_into_file "spec/models/user_spec.rb",
       "  it { should respond_to(:#{attribute}) }\n",
       before: "#_additional_attributes_specs"
@@ -120,8 +122,29 @@ if yes?("Would you like to add user authentication?")
       "  pending \"add some custom specs for #{attribute}.\"\n",
       after: "# add pending specs for additional attributes"
 
+
+    # add specs to make sure that protected attributes can not changed
+    # via mass assignment
+    unless attribute_accesible
+      insert_into_file "spec/models/user_spec.rb",
+        "it \"should not allow access to #{attribute}\" do
+        expect do
+          User.new(#{attribute}: #{attribute_default})
+        end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      end
+      ",
+      after: "  describe \"accessible attributes\" do\n"
+
+    end
+
   end
 
+
+
+
+
+  # add devise attributes -- email, password and password_confirmation --
+  # to user factory
   insert_into_file "spec/factories/users.rb",
     '    sequence(:email) { |n| "person_#{n}@example.com" }
     password "foobar"
